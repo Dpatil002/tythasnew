@@ -1,0 +1,244 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { getService, services, type Plan, type Service } from "@/lib/services";
+import {
+  ApproveTag,
+  ButtonLink,
+  ChatBubble,
+  ChatIcon,
+  Check,
+  Container,
+  CursorTag,
+  SelectionBox,
+  ToolTile,
+  buttonClass,
+} from "@/components/ui";
+import { ContactCta, PartnerBand } from "@/components/Sections";
+
+type Params = { slug: string };
+
+export function generateStaticParams() {
+  return services.map((s) => ({ slug: s.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  const { slug } = await params;
+  const s = getService(slug);
+  if (!s) return {};
+  return { title: `${s.name} from ${s.fromPrice}`, description: s.metaDescription };
+}
+
+function HeroVisual({ s }: { s: Service }) {
+  if (s.slug === "chatgpt-ads") {
+    return (
+      <div className="flex flex-col gap-2.5 rounded-[22px] bg-white p-[18px] shadow-[0_10px_30px_rgba(20,30,38,0.08)]">
+        <span className="max-w-[85%] self-end rounded-[14px_14px_4px_14px] bg-[#F1F2F4] px-3.5 py-2.5 text-[15px]">Best skincare brand for oily skin in India?</span>
+        <span className="max-w-[90%] self-start rounded-[14px_14px_14px_4px] border border-[#E3E5E8] px-3.5 py-2.5 text-[15px]">
+          <span className="mb-1 block text-xs font-bold text-brand">Sponsored · Your brand</span>
+          A short, helpful line about your product, right where the decision happens.
+        </span>
+      </div>
+    );
+  }
+  if (s.slug === "nfc-cards") {
+    return (
+      <div aria-hidden className="flex h-[190px] -rotate-3 flex-col justify-between rounded-[18px] bg-ink p-[22px] shadow-[0_18px_36px_rgba(20,30,38,0.18)]">
+        <div className="flex items-start justify-between">
+          <Image src="/brand/mark-white.png" alt="" width={40} height={27} className="h-auto w-10" />
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#8FB3F5" strokeWidth="2" strokeLinecap="round"><path d="M8.5 8.5a5 5 0 0 1 0 7M12 6a8.5 8.5 0 0 1 0 12M15.5 3.5a12 12 0 0 1 0 17" /></svg>
+        </div>
+        <div className="flex flex-col text-white"><span className="text-xl font-bold">Your Brand</span><span className="text-sm text-on-dark">Tap to chat on WhatsApp</span></div>
+      </div>
+    );
+  }
+  if (s.slug === "ai-automation") {
+    return (
+      <div className="flex flex-col gap-2.5 rounded-[22px] bg-white p-[18px] shadow-[0_10px_30px_rgba(20,30,38,0.08)]">
+        <span className="text-[13px] text-subtle">WhatsApp · 11:42 pm</span>
+        <span className="max-w-[85%] self-end rounded-[14px_14px_4px_14px] bg-[#F1F2F4] px-3.5 py-2.5 text-[15px]">Hi, do you have a slot this Saturday?</span>
+        <span className="max-w-[90%] self-start rounded-[14px_14px_14px_4px] bg-ink px-3.5 py-2.5 text-[15px] text-white">Yes! 11 am or 4 pm are free. Shall I book one for you?</span>
+        <span className="self-end rounded-[14px_14px_4px_14px] bg-[#F1F2F4] px-3.5 py-2.5 text-[15px]">4 pm please</span>
+        <span className="self-start text-[13px] font-bold text-brand">Booked and added to your calendar</span>
+      </div>
+    );
+  }
+  return <ChatBubble text={s.bubble} />;
+}
+
+function PlanCard({ plan, slug }: { plan: Plan; slug: string }) {
+  const dark = plan.featured;
+  return (
+    <div
+      className={`relative flex flex-col gap-5 rounded-3xl p-8 ${
+        dark ? "bg-ink text-white" : "border border-[#E3E5E8] bg-white"
+      }`}
+    >
+      {dark && (
+        <span className="absolute right-6 top-6 rounded-full bg-brand px-3 py-1 text-[13px] font-bold text-white">Most picked</span>
+      )}
+      <div className="flex flex-col gap-1.5">
+        <h3 className="text-lg font-bold">{plan.name}</h3>
+        <p className={dark ? "text-on-dark" : "text-subtle"}>{plan.blurb}</p>
+      </div>
+      <p className="flex items-baseline gap-2">
+        <span className="text-5xl font-extrabold leading-none tracking-[-0.045em]">{plan.price}</span>
+        <span className={dark ? "text-on-dark" : "text-subtle"}>{plan.unit}</span>
+      </p>
+      <ul className="flex flex-col gap-2.5">
+        {plan.features.map((f) => (
+          <li key={f} className="flex items-start gap-2.5"><Check light={dark} />{f}</li>
+        ))}
+        {plan.excluded?.map((f) => (
+          <li key={f} className={`flex items-start gap-2.5 ${dark ? "text-[#A9B0B8]" : "text-subtle"}`}>
+            <svg aria-hidden width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="mt-[3px] flex-none"><path d="M6 12h12" /></svg>
+            {f}
+          </li>
+        ))}
+      </ul>
+      <Link
+        href={`/contact?service=${slug}&plan=${encodeURIComponent(plan.name)}`}
+        className={buttonClass(dark ? "primary" : "secondary", "mt-auto")}
+      >
+        Choose {plan.name}
+      </Link>
+    </div>
+  );
+}
+
+export default async function ServicePage({ params }: { params: Promise<Params> }) {
+  const { slug } = await params;
+  const s = getService(slug);
+  if (!s) notFound();
+
+  return (
+    <>
+      {/* HERO */}
+      <section className="grid-canvas relative overflow-hidden border-b border-[#EDEDED]">
+        <Container className="relative z-[2] flex flex-wrap items-center gap-14 py-14 md:py-28">
+          <div className="flex min-w-0 flex-[1_1_540px] flex-col gap-6">
+            <nav aria-label="Breadcrumb" className="text-sm text-subtle">
+              <Link href="/#services" className="hover:text-brand">Services</Link> / {s.name}
+            </nav>
+            <SelectionBox className="self-start px-[18px] py-1.5">
+              <h1 className="text-[clamp(44px,7vw,104px)] font-extrabold leading-none tracking-tightest">{s.heroWord}</h1>
+            </SelectionBox>
+            <p className="text-[clamp(26px,3vw,40px)] font-bold leading-[1.1] tracking-[-0.035em]">{s.hook}</p>
+            <p className="max-w-[560px] text-[19px] text-body">{s.intro}</p>
+            <div className="flex flex-wrap gap-3">
+              <ButtonLink href="#plans">See plans</ButtonLink>
+              <ButtonLink href={`/contact?service=${s.slug}`} variant="secondary">Book a free call</ButtonLink>
+            </div>
+          </div>
+          <div className="flex min-w-0 flex-[0_1_380px] flex-col gap-3.5">
+            <HeroVisual s={s} />
+            <div className="flex flex-col gap-1.5 rounded-[22px] bg-ink p-[26px] text-white">
+              <span className="text-sm text-[#A9B0B8]">Starting from</span>
+              <span className="text-[44px] font-extrabold leading-none tracking-[-0.04em]">{s.fromPrice}</span>
+              <span className="text-[15px] text-on-dark">{s.fromUnit}</span>
+            </div>
+          </div>
+        </Container>
+        <div className="hidden md:contents">
+          {s.icon ? (
+            <ToolTile className="absolute right-[6%] top-[10%]"><Image src={s.icon} alt="" width={36} height={36} /></ToolTile>
+          ) : s.slug === "chatgpt-ads" ? (
+            <ToolTile className="absolute right-[6%] top-[10%]"><ChatIcon /><span className="text-[15px] font-semibold">ChatGPT</span></ToolTile>
+          ) : null}
+          <CursorTag {...s.cursors[0]} className="absolute bottom-[7%] right-[34%]" />
+          <CursorTag {...s.cursors[1]} className="absolute bottom-[10%] right-[3%]" />
+        </div>
+      </section>
+
+      {/* BENEFITS */}
+      <Container className="flex flex-col gap-10 py-16 md:py-28">
+        <h2 className="max-w-[760px] text-[clamp(34px,4.4vw,56px)] font-bold leading-[1.05] tracking-tighter">{s.benefitsTitle}</h2>
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] border-l border-t border-line">
+          {s.benefits.map((b) => (
+            <div key={b.title} className="flex flex-col gap-2 border-b border-r border-line p-7">
+              <h3 className="text-xl font-bold tracking-[-0.02em]">{b.title}</h3>
+              <p className="text-body">{b.text}</p>
+            </div>
+          ))}
+        </div>
+      </Container>
+
+      {/* PLANS */}
+      <section id="plans" className="scroll-mt-20 border-y border-[#EDEDED] bg-paper">
+        <Container className="flex flex-col gap-10 py-16 md:py-28">
+          <div className="flex flex-col items-center gap-3 text-center">
+            <h2 className="text-[clamp(34px,4.4vw,56px)] font-bold leading-[1.05] tracking-tighter">Pick a plan. We&apos;ll handle the rest.</h2>
+            <p className="text-lg text-body">{s.plansNote}</p>
+          </div>
+          <div className="grid items-stretch gap-5 lg:grid-cols-3">
+            {s.plans.map((p) => <PlanCard key={p.name} plan={p} slug={s.slug} />)}
+          </div>
+          {s.extra && (
+            <div className="flex flex-wrap items-center justify-between gap-4 rounded-[20px] border border-[#E3E5E8] bg-white px-7 py-6">
+              <div className="flex flex-col gap-1">
+                <span className="text-[19px] font-bold">{s.extra.title}</span>
+                <span className="text-body">{s.extra.text}</span>
+              </div>
+              <ButtonLink href={`/contact?service=${s.slug}`} variant="secondary">{s.extra.cta}</ButtonLink>
+            </div>
+          )}
+          {s.plansFootnote && <p className="text-center text-body">{s.plansFootnote}</p>}
+        </Container>
+      </section>
+
+      {/* HOW */}
+      <Container className="flex flex-col gap-10 py-16 md:py-28">
+        <h2 className="text-[clamp(34px,4.4vw,56px)] font-bold leading-[1.05] tracking-tighter">How it works</h2>
+        <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {s.steps.map((st, i) => (
+            <li key={st.title} className="flex flex-col gap-2.5 rounded-[20px] border border-line p-6">
+              <span className="text-[15px] text-subtle">0{i + 1}</span>
+              <h3 className="text-[22px] font-bold tracking-[-0.02em]">{st.title}</h3>
+              <p className="text-body">{st.text}</p>
+              {st.approve && <div className="mt-auto pt-2"><ApproveTag /></div>}
+            </li>
+          ))}
+        </ol>
+      </Container>
+
+      {/* FAQ */}
+      <section className="mx-auto flex max-w-[900px] flex-col gap-6 px-4 pb-16 md:pb-28">
+        <h2 className="text-[clamp(30px,3.6vw,44px)] font-bold tracking-[-0.04em]">Questions</h2>
+        <div className="border-b border-line">
+          {s.faqs.map((f, i) => (
+            <details key={f.q} open={i === 0} className="group border-t border-line py-5">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[19px] font-semibold">
+                {f.q}
+                <span aria-hidden className="text-2xl font-normal text-subtle transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p className="mt-3 text-body">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <PartnerBand />
+      <ContactCta title="Ready when you are." text="Message us the plan you want. We'll reply with the next step." />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: s.name,
+            provider: { "@type": "Organization", name: "Tythas Digital" },
+            areaServed: "IN",
+            offers: s.plans.map((p) => ({
+              "@type": "Offer",
+              name: p.name,
+              price: p.price.replace(/[^\d]/g, ""),
+              priceCurrency: "INR",
+            })),
+          }),
+        }}
+      />
+    </>
+  );
+}
