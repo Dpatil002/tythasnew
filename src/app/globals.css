@@ -43,6 +43,46 @@ body {
   outline-offset: 3px;
 }
 
+/* Hero: lit grid cells that trail the mouse */
+.hero-lit {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 72px;
+  height: 72px;
+  pointer-events: none;
+  background-color: transparent;
+  transition: background-color 0.6s ease-out;
+}
+.hero-lit.is-lit {
+  background-color: rgb(20 87 203 / 0.09);
+  transition: background-color 0.08s;
+}
+
+/* Hero: cursor "click" pulse */
+.cursor-click {
+  scale: 0.78;
+}
+
+/* Hero: blinking caret for the typing bubble */
+.typing-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: var(--color-brand);
+  animation: caret 1s steps(1) infinite;
+}
+@keyframes caret {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-caret { animation: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .float-a { animation: float 7s ease-in-out infinite; }
   .float-b { animation: float 9s ease-in-out infinite reverse; }
