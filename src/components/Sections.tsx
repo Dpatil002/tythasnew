@@ -1,5 +1,4 @@
-import { ButtonLink, Container, CursorTag } from "./ui";
-import { site, whatsappLink } from "@/lib/site";
+import { ButtonLink } from "./ui";
 
 export function PartnerBand() {
   return (
@@ -18,39 +17,6 @@ export function PartnerBand() {
           <ButtonLink href="/contact">Get the Growth Partner plan</ButtonLink>
         </div>
       </div>
-    </section>
-  );
-}
-
-export function ContactCta({
-  title = "Let's grow your business.",
-  text = "Tell us where you are today. We'll take it from there.",
-}: {
-  title?: string;
-  text?: string;
-}) {
-  return (
-    <section className="grid-canvas relative overflow-hidden border-t border-[#EDEDED]">
-      <Container className="relative z-10 flex flex-col items-center gap-5 py-24 text-center md:py-36">
-        <h2 className="text-[clamp(40px,5.6vw,80px)] font-bold leading-none tracking-[-0.055em]">{title}</h2>
-        <p className="max-w-[560px] text-xl text-body">{text}</p>
-        <div className="flex flex-wrap justify-center gap-3">
-          <ButtonLink href="/contact">Let&apos;s talk</ButtonLink>
-          <ButtonLink href={whatsappLink("Hi Tythas, I'd like to book a free call.")} variant="secondary" target="_blank" rel="noreferrer">
-            Chat on WhatsApp
-          </ButtonLink>
-        </div>
-        <p className="text-sm text-subtle">We reply within {site.replyTime}.</p>
-      </Container>
-      <div aria-hidden className="absolute left-[6%] top-[18%] hidden items-center gap-3 rounded-[18px] bg-white px-4 py-3.5 shadow-[0_10px_30px_rgba(20,30,38,0.08)] md:flex float-a">
-        <span className="text-[15px]">Growth plan</span>
-        <span className="rounded-md bg-brand px-2.5 py-1 text-[13px] font-bold text-white">Approved</span>
-      </div>
-      <CursorTag label="You" color="#D9480F" className="absolute right-[7%] top-[26%] hidden md:flex" />
-      <div aria-hidden className="absolute bottom-[16%] right-[10%] hidden rounded-[18px] bg-white px-4 py-3.5 text-[15px] shadow-[0_10px_30px_rgba(20,30,38,0.08)] md:block float-b">
-        New site is live
-      </div>
-      <CursorTag label="Tythas team" color="#5B4BD6" className="absolute bottom-[18%] left-[12%] hidden md:flex" />
     </section>
   );
 }

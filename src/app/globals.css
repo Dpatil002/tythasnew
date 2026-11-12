@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -42,6 +43,61 @@ body {
   outline: 2px solid var(--color-brand);
   outline-offset: 3px;
 }
+
+/* ---------- Scroll reveals (Reveal component) ---------- */
+[data-reveal] {
+  transition: opacity 0.7s cubic-bezier(.22,1,.36,1), translate 0.7s cubic-bezier(.22,1,.36,1), scale 0.7s cubic-bezier(.22,1,.36,1);
+}
+[data-reveal]:not([data-shown]) { opacity: 0; }
+[data-reveal="up"]:not([data-shown]) { translate: 0 28px; }
+[data-reveal="down"]:not([data-shown]) { translate: 0 -28px; }
+[data-reveal="left"]:not([data-shown]) { translate: -48px 0; }
+[data-reveal="right"]:not([data-shown]) { translate: 48px 0; }
+[data-reveal="pop"] { transition-timing-function: cubic-bezier(.34,1.56,.64,1); transition-duration: 0.55s; }
+[data-reveal="pop"]:not([data-shown]) { scale: 0.4; }
+
+/* ---------- Page-wide dark mode (DarkModeTrigger) ---------- */
+html, body { transition: background-color 0.8s ease; }
+html.is-dark, html.is-dark body { background-color: #000; }
+.site-header { transition: background-color 0.8s ease, border-color 0.8s ease, color 0.8s ease; }
+html.is-dark .site-header { background-color: rgb(0 0 0 / 0.85); border-color: #1d1f24; color: #fff; }
+html.is-dark .site-header .logo-dark { opacity: 0; }
+html.is-dark .site-header .logo-light { opacity: 1; }
+.dark-fade { transition: opacity 0.8s ease, color 0.8s ease; }
+
+/* ---------- Logo marquee ---------- */
+.marquee-track { animation: marquee var(--marquee-duration, 40s) linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee { mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+@keyframes marquee { to { translate: -50% 0; } }
+
+/* ---------- Halftone laptop screen ---------- */
+.halftone {
+  background:
+    radial-gradient(circle, rgb(255 255 255 / 0.22) 1px, transparent 1.6px) 0 0 / 7px 7px,
+    radial-gradient(120% 90% at 85% 90%, #0a3fa8 0%, #1457cb 45%, #3b8df5 75%, #8cc4ff 100%);
+  animation: halftone 14s ease-in-out infinite alternate;
+}
+@keyframes halftone {
+  to { background-position: 14px 7px, 0 0; filter: hue-rotate(-8deg) brightness(1.06); }
+}
+
+/* ---------- Dot pattern that lights up around the cursor ---------- */
+.dots-base {
+  background-image: radial-gradient(#d9dce1 1px, transparent 1.2px);
+  background-size: 14px 14px;
+}
+.dots-glow {
+  background-image: radial-gradient(var(--color-brand) 1.2px, transparent 1.4px);
+  background-size: 14px 14px;
+  mask-image: radial-gradient(180px circle at var(--mx, -999px) var(--my, -999px), #000 0%, transparent 100%);
+  transition: opacity 0.3s;
+}
+
+/* ---------- Scroll-coloured words ---------- */
+.scroll-word { color: #c9ccd2; transition: color 0.25s ease; }
+.scroll-word.is-on { color: var(--color-ink); }
+.scroll-word.is-on.accent { color: var(--color-brand); }
 
 /* Hero: lit grid cells that trail the mouse */
 .hero-lit {

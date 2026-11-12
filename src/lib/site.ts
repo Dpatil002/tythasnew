@@ -8,6 +8,8 @@ export const site = {
   whatsappNumber: "910000000000",
   whatsappDisplay: "[+91 XXXXX XXXXX]",
   replyTime: "24 hours",
+  // TODO: replace with your real booking link (Calendly, Cal.com, Google Calendar appointment page)
+  calendarUrl: "https://cal.com/[your-link]",
   instagram: "https://www.instagram.com/tythas_digital",
   linkedin: "#",
   foundedYear: 2021,

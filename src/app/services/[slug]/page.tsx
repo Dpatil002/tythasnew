@@ -15,7 +15,27 @@ import {
   ToolTile,
   buttonClass,
 } from "@/components/ui";
-import { ContactCta, PartnerBand } from "@/components/Sections";
+import { PartnerBand } from "@/components/Sections";
+import ProjectCollage from "@/components/ProjectCollage";
+import Faq from "@/components/Faq";
+import Reveal from "@/components/motion/Reveal";
+import { IconBadge } from "@/components/icons";
+import {
+  BarChart3, BellRing, Bot, CalendarCheck, CircleDollarSign, Clock, Code, Database, Eye, FileText, Gauge, Layers, Link2,
+  ListChecks, MapPin, Megaphone, MessageCircle, MessagesSquare, MousePointerClick, Palette, PenTool, Printer, QrCode, RefreshCw,
+  Repeat, Search, ShieldCheck, Smartphone, Sparkles, Target, Truck, Users, Workflow, Zap, type LucideIcon,
+} from "lucide-react";
+
+const benefitIcons: Record<string, LucideIcon[]> = {
+  "websites-and-apps": [MousePointerClick, Smartphone, Search, MessageCircle, BarChart3, PenTool],
+  "ui-ux-design": [Workflow, Palette, MousePointerClick, Layers, Code, Smartphone],
+  seo: [Search, FileText, Gauge, MapPin, PenTool, Sparkles],
+  "google-ads": [Target, Megaphone, BarChart3, Repeat, CircleDollarSign, FileText],
+  "chatgpt-ads": [ShieldCheck, MessagesSquare, Target, BarChart3, Sparkles, Zap],
+  "nfc-cards": [Palette, Link2, RefreshCw, BarChart3, QrCode, Truck],
+  "ai-automation": [Bot, Clock, Repeat, Database, CalendarCheck, BellRing],
+};
+const stepIcons: LucideIcon[] = [ListChecks, Eye, Printer, Users];
 
 type Params = { slug: string };
 
@@ -71,7 +91,7 @@ function PlanCard({ plan, slug }: { plan: Plan; slug: string }) {
   const dark = plan.featured;
   return (
     <div
-      className={`relative flex flex-col gap-5 rounded-3xl p-8 ${
+      className={`relative flex w-full flex-col gap-5 rounded-3xl p-8 ${
         dark ? "bg-ink text-white" : "border border-[#E3E5E8] bg-white"
       }`}
     >
@@ -118,9 +138,12 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       <section className="grid-canvas relative overflow-hidden border-b border-[#EDEDED]">
         <Container className="relative z-[2] flex flex-wrap items-center gap-14 py-14 md:py-28">
           <div className="flex min-w-0 flex-[1_1_540px] flex-col gap-6">
-            <nav aria-label="Breadcrumb" className="text-sm text-subtle">
-              <Link href="/#services" className="hover:text-brand">Services</Link> / {s.name}
-            </nav>
+            <div className="flex items-center gap-3">
+              <IconBadge slug={s.slug} />
+              <nav aria-label="Breadcrumb" className="text-sm text-subtle">
+                <Link href="/#services" className="hover:text-brand">Services</Link> / {s.name}
+              </nav>
+            </div>
             <SelectionBox className="self-start px-[18px] py-1.5">
               <h1 className="text-[clamp(44px,7vw,104px)] font-extrabold leading-none tracking-tightest">{s.heroWord}</h1>
             </SelectionBox>
@@ -155,12 +178,16 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       <Container className="flex flex-col gap-10 py-16 md:py-28">
         <h2 className="max-w-[760px] text-[clamp(34px,4.4vw,56px)] font-bold leading-[1.05] tracking-tighter">{s.benefitsTitle}</h2>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] border-l border-t border-line">
-          {s.benefits.map((b) => (
-            <div key={b.title} className="flex flex-col gap-2 border-b border-r border-line p-7">
-              <h3 className="text-xl font-bold tracking-[-0.02em]">{b.title}</h3>
-              <p className="text-body">{b.text}</p>
-            </div>
-          ))}
+          {s.benefits.map((b, i) => {
+            const Icon = benefitIcons[s.slug]?.[i] ?? Sparkles;
+            return (
+              <Reveal key={b.title} delay={(i % 3) * 150} className="flex flex-col gap-3 border-b border-r border-line p-7">
+                <span aria-hidden className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand"><Icon className="h-5 w-5" strokeWidth={1.8} /></span>
+                <h3 className="text-xl font-bold tracking-[-0.02em]">{b.title}</h3>
+                <p className="text-body">{b.text}</p>
+              </Reveal>
+            );
+          })}
         </div>
       </Container>
 
@@ -172,7 +199,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
             <p className="text-lg text-body">{s.plansNote}</p>
           </div>
           <div className="grid items-stretch gap-5 lg:grid-cols-3">
-            {s.plans.map((p) => <PlanCard key={p.name} plan={p} slug={s.slug} />)}
+            {s.plans.map((p, i) => <Reveal key={p.name} delay={i * 150} className="flex"><PlanCard plan={p} slug={s.slug} /></Reveal>)}
           </div>
           {s.extra && (
             <div className="flex flex-wrap items-center justify-between gap-4 rounded-[20px] border border-[#E3E5E8] bg-white px-7 py-6">
@@ -192,34 +219,23 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         <h2 className="text-[clamp(34px,4.4vw,56px)] font-bold leading-[1.05] tracking-tighter">How it works</h2>
         <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {s.steps.map((st, i) => (
-            <li key={st.title} className="flex flex-col gap-2.5 rounded-[20px] border border-line p-6">
-              <span className="text-[15px] text-subtle">0{i + 1}</span>
+            <Reveal as="li" key={st.title} delay={i * 120} className="flex flex-col gap-2.5 rounded-[20px] border border-line p-6">
+              <span className="flex items-center justify-between">
+                <span aria-hidden className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-soft text-brand">{(() => { const I = stepIcons[i] ?? ListChecks; return <I className="h-5 w-5" strokeWidth={1.8} />; })()}</span>
+                <span className="text-[15px] text-subtle">0{i + 1}</span>
+              </span>
               <h3 className="text-[22px] font-bold tracking-[-0.02em]">{st.title}</h3>
               <p className="text-body">{st.text}</p>
               {st.approve && <div className="mt-auto pt-2"><ApproveTag /></div>}
-            </li>
+            </Reveal>
           ))}
         </ol>
       </Container>
 
-      {/* FAQ */}
-      <section className="mx-auto flex max-w-[900px] flex-col gap-6 px-4 pb-16 md:pb-28">
-        <h2 className="text-[clamp(30px,3.6vw,44px)] font-bold tracking-[-0.04em]">Questions</h2>
-        <div className="border-b border-line">
-          {s.faqs.map((f, i) => (
-            <details key={f.q} open={i === 0} className="group border-t border-line py-5">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[19px] font-semibold">
-                {f.q}
-                <span aria-hidden className="text-2xl font-normal text-subtle transition-transform group-open:rotate-45">+</span>
-              </summary>
-              <p className="mt-3 text-body">{f.a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
+      <Faq items={s.faqs} title={`${s.name}: questions`} />
 
       <PartnerBand />
-      <ContactCta title="Ready when you are." text="Message us the plan you want. We'll reply with the next step." />
+      <ProjectCollage title={["Ready when", "you are."]} text="Message us the plan you want. We'll reply with the next step and a clear quote." />
 
       <script
         type="application/ld+json"

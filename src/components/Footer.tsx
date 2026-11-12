@@ -24,6 +24,7 @@ export default function Footer() {
             <p className="font-semibold">Company</p>
             <Link href="/#work" className="text-body hover:text-brand">Work</Link>
             <Link href="/#how" className="text-body hover:text-brand">How we work</Link>
+            <Link href="/blog" className="text-body hover:text-brand">Blog</Link>
             <Link href="/contact" className="text-body hover:text-brand">Contact</Link>
           </div>
           <div className="flex flex-col gap-2">

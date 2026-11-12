@@ -23,7 +23,7 @@ export default function ContactPage() {
               <h1 className="text-[clamp(48px,6.4vw,96px)] font-extrabold leading-none tracking-tightest">Let&apos;s talk.</h1>
             </SelectionBox>
             <p className="text-[clamp(24px,2.6vw,34px)] font-bold leading-[1.15] tracking-[-0.035em]">Tell us what you need. We&apos;ll take it from there.</p>
-            <p className="max-w-[440px] text-lg text-body">4 quick taps. Under 30 seconds. No long forms.</p>
+            <p className="max-w-[440px] text-lg text-body">6 quick steps, mostly taps. About 45 seconds.</p>
           </div>
 
           <div className="order-3 flex flex-col gap-3 lg:mt-2">
