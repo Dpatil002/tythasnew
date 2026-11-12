@@ -51,3 +51,9 @@ Editors write posts at `/keystatic`. Posts live in `content/posts/*.mdoc`, image
 - Live site: set these in Vercel → Settings → Environment Variables, then redeploy:
   `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET`, `NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG`.
   Editors sign in with GitHub (they need write access to this repo). Every save is a commit, and Vercel redeploys in about a minute.
+
+## Deploying on Netlify
+
+`netlify.toml` is included. In Netlify: Add new site → Import from GitHub → `Dpatil002/tythasnew` → Deploy.
+Add the same environment variables as on Vercel (`CONTACT_WEBHOOK_URL`, the four `KEYSTATIC_*` ones),
+and add `https://<your-site>.netlify.app/api/keystatic/github/oauth/callback` as a callback URL on the Keystatic GitHub App.
