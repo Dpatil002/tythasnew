@@ -15,6 +15,8 @@ export const clients: { name: string; logo?: string; style?: string }[] = [
 ]
 
 export type CaseStudy = {
+  /** URL of the case study page: /work/<slug> */
+  slug: string;
   client: string;
   sector: string;
   /** Short title shown above the headline, e.g. "Ear Wax Removal Clinic, UK" */
@@ -34,6 +36,7 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: "dewaxify",
     client: "Dewaxify",
     sector: "Healthcare · United Kingdom",
     title: "Ear Wax Removal Clinic, UK",
@@ -50,6 +53,7 @@ export const caseStudies: CaseStudy[] = [
     url: "https://dewaxifylondon.com",
   },
   {
+    slug: "sb-patil-group",
     client: "SB Patil Group",
     sector: "Luxury real estate · India",
     title: "Luxury Real Estate",
@@ -65,6 +69,7 @@ export const caseStudies: CaseStudy[] = [
     accent: "#3BA55C",
   },
   {
+    slug: "gixel-labs",
     client: "Gixel Labs",
     sector: "AI & 3D · Technology",
     title: "Building Authority in an AI Market",
@@ -79,6 +84,7 @@ export const caseStudies: CaseStudy[] = [
     accent: "#6D4AFF",
   },
   {
+    slug: "homyfyd",
     client: "Homyfyd",
     sector: "PropTech SaaS · India",
     title: "Building a Smarter Real Estate Platform for Property Businesses",
@@ -91,6 +97,7 @@ export const caseStudies: CaseStudy[] = [
     accent: "#1FA7B8",
   },
   {
+    slug: "happy-haven",
     client: "Happy Haven",
     sector: "AI gifting · E-commerce",
     title: "Redefining Personalized Gifting with AI",
@@ -103,6 +110,7 @@ export const caseStudies: CaseStudy[] = [
     accent: "#E0336E",
   },
   {
+    slug: "the-powerpoint-coworking",
     client: "The PowerPoint Coworking",
     sector: "Coworking · Pune",
     title: "Creating a Digital Experience for Modern Workspaces",

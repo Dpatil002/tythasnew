@@ -65,7 +65,7 @@ export default function Nav() {
               </div>
             )}
           </div>
-          <Link href="/#work" className="hover:text-brand">Work</Link>
+          <Link href="/work" className="hover:text-brand">Work</Link>
           <Link href="/#how" className="hover:text-brand">How we work</Link>
           <Link href="/blog" className="hover:text-brand">Blog</Link>
           <Link href="/contact" className={buttonClass("primary")}>Let&apos;s talk</Link>
@@ -98,7 +98,7 @@ export default function Nav() {
             ))}
           </ul>
           <div className="flex flex-col gap-1 py-3">
-            <Link href="/#work" className="px-1 py-2 font-medium">Work</Link>
+            <Link href="/work" className="px-1 py-2 font-medium">Work</Link>
             <Link href="/#how" className="px-1 py-2 font-medium">How we work</Link>
             <Link href="/blog" className="px-1 py-2 font-medium">Blog</Link>
           </div>

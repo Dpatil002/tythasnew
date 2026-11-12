@@ -15,7 +15,6 @@ const wrap = (d: number) => {
 
 function Card({ cs, active }: { cs: CaseStudy; active: boolean }) {
   const top = cs.stats.slice(0, 2);
-  const external = Boolean(cs.url);
   return (
     <article
       className={`flex h-full flex-col overflow-hidden rounded-[22px] border bg-[#FAFBFC] transition-shadow duration-500 ${
@@ -50,13 +49,12 @@ function Card({ cs, active }: { cs: CaseStudy; active: boolean }) {
         <h3 className="text-[19px] font-bold leading-snug tracking-[-0.01em]">{cs.title}</h3>
         <p className="line-clamp-4 text-[15px] leading-relaxed text-body">{cs.summary}</p>
         <Link
-          href={cs.url ?? "/contact"}
-          {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+          href={`/work/${cs.slug}`}
           tabIndex={active ? 0 : -1}
           className="mt-auto inline-flex items-center gap-1.5 self-start pt-2 text-[15px] font-semibold hover:underline"
           style={{ color: cs.accent }}
         >
-          {external ? "View website" : "Discuss a similar project"} <ArrowUpRight aria-hidden className="h-4 w-4" />
+          Read case study <ArrowUpRight aria-hidden className="h-4 w-4" />
         </Link>
       </div>
     </article>
@@ -163,6 +161,11 @@ export default function CaseStudies() {
         <p className="mt-2 text-center text-[15px] tabular-nums text-subtle" aria-live="polite">
           <span className="font-bold text-ink">{String(active + 1).padStart(2, "0")}</span> / {String(N).padStart(2, "0")}
         </p>
+        <div className="mt-8 flex justify-center">
+          <Link href="/work" className="inline-flex h-12 items-center gap-1.5 rounded-full border border-line-strong px-6 font-semibold hover:border-ink">
+            View all case studies <ArrowUpRight aria-hidden className="h-4 w-4" />
+          </Link>
+        </div>
       </Reveal>
     </section>
   );

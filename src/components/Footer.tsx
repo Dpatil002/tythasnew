@@ -7,7 +7,7 @@ import { InstagramIcon, LinkedInIcon } from "./icons";
 
 const company = [
   { label: "About", href: "/#about" },
-  { label: "Our Work", href: "/#work" },
+  { label: "Our Work", href: "/work" },
   { label: "How We Work", href: "/#how" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
