@@ -161,3 +161,5 @@ html.is-dark .site-header .logo-light { opacity: 1; }
 .waves path:nth-child(3n+1) { animation-duration: 10.5s; animation-delay: -3s; }
 @keyframes wave-drift { from { translate: 0 -10px; } to { translate: 0 12px; } }
 @media (prefers-reduced-motion: reduce) { .waves path { animation: none; } }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

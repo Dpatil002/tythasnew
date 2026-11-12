@@ -24,6 +24,8 @@ export type CaseStudy = {
   /** Big result-led headline on the card */
   headline: string;
   summary: string;
+  /** Shorter summary for the homepage carousel */
+  short: string;
   tags: string[];
   /** Up to 3 numbers. When empty, `badges` are shown in the stats row instead. */
   stats: { value: string; label: string }[];
@@ -42,6 +44,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Ear Wax Removal Clinic, UK",
     headline: "+200% appointment enquiries for a London ear-care clinic",
     summary: "7,900% increase in organic traffic over a 12-month period. Clicks went from 40 to a steady 4,000.",
+    short: "7,900% increase in organic traffic over 12 months. Clicks went from 40 to a steady 4,000.",
     tags: ["Healthcare", "SEO", "CRO", "Website"],
     stats: [
       { value: "+200%", label: "appointment enquiries" },
@@ -59,6 +62,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Luxury Real Estate",
     headline: "Monthly enquiries up from 40 to 250 for a luxury developer",
     summary: "Directly converted traffic gains into business revenue by scaling monthly enquiries from 40 to 250 per month.",
+    short: "Turned traffic gains directly into business revenue by scaling monthly enquiries from 40 to 250.",
     tags: ["Real Estate", "SEO", "Lead Generation", "Luxury"],
     stats: [
       { value: "66.67%", label: "organic growth" },
@@ -75,6 +79,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Building Authority in an AI Market",
     headline: "+300% organic enquiries for an AI and 3D studio",
     summary: "Positioned the brand as an industry authority using SEO, content strategy and conversion-focused website improvements.",
+    short: "Positioned the brand as an industry authority with SEO, content strategy and conversion-focused website improvements.",
     tags: ["AI", "3D", "Branding", "SEO"],
     stats: [
       { value: "+300%", label: "organic enquiries" },
@@ -90,6 +95,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Building a Smarter Real Estate Platform for Property Businesses",
     headline: "One platform for listings, enquiries, CRM and site visits",
     summary: "Designed a complete real estate platform that simplifies property listings, enquiry management, CRM operations and site-visit scheduling, so developers, brokers and consultants can manage the whole customer journey in one place.",
+    short: "A real estate platform that lets developers, brokers and consultants manage the whole customer journey in one place.",
     tags: ["SaaS", "CRM", "Dashboard", "Real Estate"],
     stats: [],
     badges: ["CRM powered", "End-to-end platform", "Site-visit scheduling"],
@@ -103,6 +109,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Redefining Personalized Gifting with AI",
     headline: "AI-powered gift hampers, personalised in a few taps",
     summary: "Designed an AI-powered gifting platform that helps people build thoughtful, personalised gift hampers through intelligent recommendations, seamless customisation and an effortless checkout.",
+    short: "An AI gifting platform that helps people build thoughtful hampers through smart recommendations and easy customisation.",
     tags: ["AI", "E-commerce", "Personalization", "Product Design"],
     stats: [],
     badges: ["AI powered", "100% customisable", "Smart recommendations"],
@@ -116,6 +123,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Creating a Digital Experience for Modern Workspaces",
     headline: "A lead-focused website for a modern coworking space",
     summary: "Designed a conversion-focused coworking website that helps professionals and businesses discover workspaces, compare facilities, understand pricing and submit enquiries in minutes.",
+    short: "A coworking website that helps people compare workspaces, understand pricing and enquire in minutes.",
     tags: ["Commercial", "Coworking", "Lead Generation", "UX"],
     stats: [],
     badges: ["Lead focused", "Mobile optimised", "Pricing at a glance"],
