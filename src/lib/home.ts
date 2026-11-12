@@ -38,7 +38,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "Healthcare · United Kingdom",
     title: "Ear Wax Removal Clinic, UK",
     headline: "+200% appointment enquiries for a London ear-care clinic",
-    summary: "7,900% increase in organic traffic over 12 months. Clicks went from 40 to a steady 4,000.",
+    summary: "7,900% increase in organic traffic over a 12-month period. Clicks went from 40 to a steady 4,000.",
     tags: ["Healthcare", "SEO", "CRO", "Website"],
     stats: [
       { value: "+200%", label: "appointment enquiries" },
@@ -54,7 +54,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "Luxury real estate · India",
     title: "Luxury Real Estate",
     headline: "Monthly enquiries up from 40 to 250 for a luxury developer",
-    summary: "Turned traffic gains directly into business revenue by scaling monthly enquiries from 40 to 250.",
+    summary: "Directly converted traffic gains into business revenue by scaling monthly enquiries from 40 to 250 per month.",
     tags: ["Real Estate", "SEO", "Lead Generation", "Luxury"],
     stats: [
       { value: "66.67%", label: "organic growth" },
@@ -83,7 +83,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "PropTech SaaS · India",
     title: "Building a Smarter Real Estate Platform for Property Businesses",
     headline: "One platform for listings, enquiries, CRM and site visits",
-    summary: "A real estate platform that lets developers, brokers and consultants manage the whole customer journey in one place.",
+    summary: "Designed a complete real estate platform that simplifies property listings, enquiry management, CRM operations and site-visit scheduling, so developers, brokers and consultants can manage the whole customer journey in one place.",
     tags: ["SaaS", "CRM", "Dashboard", "Real Estate"],
     stats: [],
     badges: ["CRM powered", "End-to-end platform", "Site-visit scheduling"],
@@ -95,7 +95,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "AI gifting · E-commerce",
     title: "Redefining Personalized Gifting with AI",
     headline: "AI-powered gift hampers, personalised in a few taps",
-    summary: "An AI gifting platform that helps people build thoughtful hampers through smart recommendations and easy customisation.",
+    summary: "Designed an AI-powered gifting platform that helps people build thoughtful, personalised gift hampers through intelligent recommendations, seamless customisation and an effortless checkout.",
     tags: ["AI", "E-commerce", "Personalization", "Product Design"],
     stats: [],
     badges: ["AI powered", "100% customisable", "Smart recommendations"],
@@ -107,7 +107,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "Coworking · Pune",
     title: "Creating a Digital Experience for Modern Workspaces",
     headline: "A lead-focused website for a modern coworking space",
-    summary: "Helps professionals and businesses discover workspaces, compare facilities, understand pricing and enquire in minutes.",
+    summary: "Designed a conversion-focused coworking website that helps professionals and businesses discover workspaces, compare facilities, understand pricing and submit enquiries in minutes.",
     tags: ["Commercial", "Coworking", "Lead Generation", "UX"],
     stats: [],
     badges: ["Lead focused", "Mobile optimised", "Pricing at a glance"],
@@ -118,26 +118,27 @@ export const caseStudies: CaseStudy[] = [
 
 export type Review = { quote: string; name: string; role: string; company: string; rating: number };
 
-/* Use only real, permission-cleared client quotes here (or embed your Google reviews). */
-export const reviews: Review[] = [
-  { quote: "[Client quote about how Tythas handled everything and what changed for the business.]", name: "[Client name]", role: "[Founder]", company: "Dewaxify", rating: 5 },
-  { quote: "[Client quote about speed, communication and only needing to approve key steps.]", name: "[Client name]", role: "[Owner]", company: "SB Patil Group", rating: 5 },
-  { quote: "[Client quote about the result: more leads, bookings or sales, with a number if possible.]", name: "[Client name]", role: "[Director]", company: "Gixel Labs", rating: 5 },
-  { quote: "[Client quote about design quality and how customers react to the new site.]", name: "[Client name]", role: "[Founder]", company: "Happy Haven", rating: 5 },
-  { quote: "[Client quote about support after launch and ongoing growth work.]", name: "[Client name]", role: "[Manager]", company: "The PowerPoint Coworking", rating: 5 },
-  { quote: "[Client quote about working with one team instead of many freelancers.]", name: "[Client name]", role: "[Founder]", company: "Homyfyd", rating: 5 },
-];
+/*
+ * Real client reviews only. Ask each client for a short quote (or copy it from Google
+ * Reviews with their permission) and add it here. The reviews section stays hidden
+ * on the homepage until this list has at least 3 entries.
+ *
+ * Example:
+ * { quote: "…", name: "Full Name", role: "Founder", company: "Dewaxify", rating: 5 },
+ */
+export const reviews: Review[] = [];
 
-export const reviewSummary = { rating: "[4.9]", count: "[XX]", source: "Google" };
+/* Fill in from your Google Business Profile once you have reviews there. */
+export const reviewSummary: { rating: string; count: string; source: string } | null = null;
 
 export const homeFaqs: { q: string; a: string }[] = [
   {
-    q: "What does \"you just approve\" actually mean?",
-    a: "We plan, design, build and run the work. You see each key step before it goes live (the plan, the designs, the launch) and say yes or ask for changes. No briefing five vendors, no chasing updates.",
+    q: "How involved do I need to be?",
+    a: "As much or as little as you like. We plan, build, launch and keep improving. You stay informed with clear updates, and we check in before anything big goes live. No briefing five vendors, no chasing updates.",
   },
   {
     q: "How much does it cost to work with Tythas?",
-    a: "Single services start from ₹1,999 a month for ads and ₹3,999 for a website. If you want everything handled, the Growth Partner plan starts from ₹14,999 a month. Every service page lists exact plans.",
+    a: "Single services start from ₹1,999 a month for Google or Meta ads and ₹3,999 for a website. If you want everything handled, the Growth Partner plan starts from ₹14,999 a month. Every service page lists exact plans.",
   },
   {
     q: "I only have an idea. Can you help me build an MVP?",

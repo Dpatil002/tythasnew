@@ -3,8 +3,8 @@ import {
   Bot,
   ChartColumn,
   CodeXml,
-  MessagesSquare,
-  Nfc,
+  Megaphone,
+  MousePointerClick,
   PencilRuler,
   Search,
   type LucideIcon,
@@ -16,8 +16,8 @@ export const serviceIcons: Record<string, LucideIcon> = {
   "ui-ux-design": PencilRuler,
   seo: Search,
   "google-ads": ChartColumn,
-  "chatgpt-ads": MessagesSquare,
-  "nfc-cards": Nfc,
+  "meta-ads": Megaphone,
+  "conversion-optimisation": MousePointerClick,
   "ai-automation": Bot,
 };
 

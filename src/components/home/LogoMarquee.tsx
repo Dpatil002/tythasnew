@@ -6,9 +6,9 @@ export default function LogoMarquee() {
   const row = [...clients, ...clients];
   return (
     <section aria-label="Brands we've worked with" className="border-b border-[#EDEDED] py-10 md:py-14">
-      <p className="mb-8 text-center text-[13px] font-semibold uppercase tracking-[0.14em] text-subtle">
-        Trusted by founders and brands in India, the UK and Australia
-      </p>
+      <h2 className="mb-8 text-center text-[13px] font-semibold uppercase tracking-[0.14em] text-subtle">
+        Trusted by businesses with bigger ambitions
+      </h2>
       <div className="marquee overflow-hidden">
         <ul className="marquee-track flex w-max items-center" style={{ ["--marquee-duration" as string]: "45s" }}>
           {row.map((c, i) => (

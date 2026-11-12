@@ -4,9 +4,9 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { buttonClass } from "../ui";
 
-const LINE_1 = "We build and grow digital businesses.";
-const LINE_2 = "You just approve.";
-const SUB = "Strategy, design, development, marketing and AI. One team runs it all, from first idea to steady sales.";
+const LINE_1 = "We don't just help businesses grow.";
+const LINE_2 = "We build the systems that make growth happen.";
+const SUB = "From attracting the right customers to turning interest into revenue, we bring strategy, technology and marketing together to make your next stage of growth happen.";
 
 /**
  * The statement stays pinned while its words colour in one by one as you scroll,
@@ -56,11 +56,11 @@ export default function ScrollWords() {
     <section ref={outer} className="relative h-[180vh]">
       <div className="sticky top-0 flex min-h-screen items-center">
         <div className="mx-auto flex max-w-[1100px] flex-col items-center gap-8 px-4 text-center">
-          <h1 className="text-[clamp(38px,5.6vw,80px)] font-bold leading-[1.04] tracking-tighter">
+          <h2 className="text-[clamp(36px,5vw,72px)] font-bold leading-[1.04] tracking-tighter">
             {split(LINE_1)}
             <br className="hidden md:block" />
             {split(LINE_2, true)}
-          </h1>
+          </h2>
           <p className="max-w-[680px] text-[clamp(18px,1.6vw,22px)] leading-relaxed">{split(SUB)}</p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link href="/contact" className={buttonClass("primary")}>Let&apos;s talk</Link>

@@ -3,9 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { site } from "@/lib/site";
+import { site, whatsappLink } from "@/lib/site";
 import Reveal from "./motion/Reveal";
-import { InstagramIcon, LinkedInIcon } from "./icons";
 import { ChatIcon, buttonClass } from "./ui";
 
 const WAYPOINTS = [
@@ -37,8 +36,8 @@ function Tile({ children, className, delay }: { children: React.ReactNode; class
  * enter, app tiles that pop in, and a cursor that tours the scene clicking.
  */
 export default function ProjectCollage({
-  title = ["Let's do a", "project together"],
-  text = "Tell us where you are today. We'll turn it into a website, product or campaign that brings customers, and handle it from start to finish.",
+  title = ["Ready to grow", "your business?"],
+  text = "Tell us what you're building and where you want to go. We'll figure out how to get you there.",
 }: {
   title?: [string, string];
   text?: string;
@@ -194,9 +193,10 @@ export default function ProjectCollage({
           </Reveal>
           <Reveal as="p" delay={120} className="max-w-[500px] text-[19px] text-body">{text}</Reveal>
           <Reveal delay={220} className="flex flex-wrap items-center gap-5">
-            <Link href="/contact" className={buttonClass("primary", "min-w-[240px]")}>Let&apos;s talk</Link>
-            <a href={site.instagram} target="_blank" rel="noreferrer" aria-label="Tythas on Instagram" className="transition-transform hover:-translate-y-0.5"><InstagramIcon size={26} /></a>
-            <a href={site.linkedin} aria-label="Tythas on LinkedIn" className="transition-transform hover:-translate-y-0.5"><LinkedInIcon size={26} /></a>
+            <Link href="/contact" className={buttonClass("primary", "min-w-[200px]")}>Let&apos;s talk</Link>
+            <a href={whatsappLink("Hi Tythas, I'd like to grow my business.")} target="_blank" rel="noreferrer" className={buttonClass("secondary", "gap-2")}>
+              <Image src="/icons/whatsapp.svg" alt="" width={20} height={20} /> Chat on WhatsApp
+            </a>
           </Reveal>
           <Reveal as="p" delay={300} className="text-sm text-subtle">We reply within {site.replyTime}. Or email <a href={`mailto:${site.email}`} className="font-semibold text-ink underline-offset-4 hover:underline">{site.email}</a></Reveal>
         </div>

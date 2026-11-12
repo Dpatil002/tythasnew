@@ -43,9 +43,9 @@ const CURSORS: CursorDef[] = [
 
 const MESSAGES = [
   "Let's grow your business online.",
-  "Your new homepage is ready to approve.",
-  "Google Ads are live. 14 leads this week.",
-  "SEO report sent. You're up 9 spots.",
+  "Dewaxify: appointment enquiries up 200%.",
+  "SB Patil Group: enquiries up from 40 to 250 a month.",
+  "Gixel Labs: organic enquiries up 300%.",
 ];
 
 const ease = (t: number) => -(Math.cos(Math.PI * t) - 1) / 2;
@@ -335,7 +335,7 @@ export default function HeroCanvas() {
           {(["-left-1.5 -top-1.5", "left-1/2 -translate-x-1/2 -top-1.5", "-right-1.5 -top-1.5", "-left-1.5 -bottom-1.5", "left-1/2 -translate-x-1/2 -bottom-1.5", "-right-1.5 -bottom-1.5"] as const).map((p) => (
             <span key={p} aria-hidden className={`absolute h-2.5 w-2.5 border-[1.5px] border-[#B8BCC2] bg-white transition-opacity duration-500 ${p} ${started ? "opacity-100" : "opacity-0"}`} style={fade(500)} />
           ))}
-          <p className="text-[clamp(72px,15vw,240px)] font-extrabold leading-[0.95] tracking-[-0.065em]">Growth.</p>
+          <h1 className="text-[clamp(72px,15vw,240px)] font-extrabold leading-[0.95] tracking-[-0.065em]">Growth.</h1>
         </div>
         {!hasDragged && (
           <span aria-hidden className={`absolute -bottom-9 left-1/2 hidden -translate-x-1/2 whitespace-nowrap rounded-full bg-ink px-3 py-1 text-xs font-medium text-white md:block ${fadeCls}`} style={fade(2200)}>

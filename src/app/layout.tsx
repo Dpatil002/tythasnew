@@ -16,11 +16,11 @@ const inter = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Tythas Digital · We build and grow digital businesses",
+    default: "Tythas Digital · We build the systems that make growth happen",
     template: "%s · Tythas Digital",
   },
   description:
-    "Websites, apps, UI/UX, SEO, Google and ChatGPT ads, NFC cards and AI automation. One team runs your growth from first idea to steady sales. You just approve.",
+    "Websites, apps, UI/UX, SEO, Google and Meta ads, conversion optimisation and AI automation. We build the systems that make growth happen, from Pune for businesses in India and worldwide.",
   openGraph: {
     siteName: site.name,
     type: "website",

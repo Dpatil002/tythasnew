@@ -7,7 +7,7 @@ import {
   ApproveTag,
   ButtonLink,
   ChatBubble,
-  ChatIcon,
+
   Check,
   Container,
   CursorTag,
@@ -22,9 +22,9 @@ import Faq from "@/components/Faq";
 import Reveal from "@/components/motion/Reveal";
 import { IconBadge } from "@/components/icons";
 import {
-  BarChart3, BellRing, Bot, CalendarCheck, CircleDollarSign, Clock, Code, Database, Eye, FileText, Gauge, Layers, Link2,
-  ListChecks, MapPin, Megaphone, MessageCircle, MessagesSquare, MousePointerClick, Palette, PenTool, Printer, QrCode, RefreshCw,
-  Repeat, Search, ShieldCheck, Smartphone, Sparkles, Target, Truck, Users, Workflow, Zap, type LucideIcon,
+  BarChart3, BellRing, Bot, CalendarCheck, CircleDollarSign, Clock, Code, Database, Eye, FileText, Gauge, Layers, 
+  ListChecks, MapPin, Megaphone, MessageCircle, MousePointerClick, Palette, PenTool, Printer, 
+  Repeat, Search, ShieldCheck, Smartphone, Sparkles, Target, Users, Workflow, Zap, type LucideIcon,
 } from "lucide-react";
 
 const benefitIcons: Record<string, LucideIcon[]> = {
@@ -32,8 +32,8 @@ const benefitIcons: Record<string, LucideIcon[]> = {
   "ui-ux-design": [Workflow, Palette, MousePointerClick, Layers, Code, Smartphone],
   seo: [Search, FileText, Gauge, MapPin, PenTool, Sparkles],
   "google-ads": [Target, Megaphone, BarChart3, Repeat, CircleDollarSign, FileText],
-  "chatgpt-ads": [ShieldCheck, MessagesSquare, Target, BarChart3, Sparkles, Zap],
-  "nfc-cards": [Palette, Link2, RefreshCw, BarChart3, QrCode, Truck],
+  "meta-ads": [Target, Palette, BarChart3, Repeat, Zap, FileText],
+  "conversion-optimisation": [Search, Eye, MousePointerClick, Zap, ShieldCheck, Gauge],
   "ai-automation": [Bot, Clock, Repeat, Database, CalendarCheck, BellRing],
 };
 const stepIcons: LucideIcon[] = [ListChecks, Eye, Printer, Users];
@@ -52,28 +52,6 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 }
 
 function HeroVisual({ s }: { s: Service }) {
-  if (s.slug === "chatgpt-ads") {
-    return (
-      <div className="flex flex-col gap-2.5 rounded-[22px] bg-white p-[18px] shadow-[0_10px_30px_rgba(20,30,38,0.08)]">
-        <span className="max-w-[85%] self-end rounded-[14px_14px_4px_14px] bg-[#F1F2F4] px-3.5 py-2.5 text-[15px]">Best skincare brand for oily skin in India?</span>
-        <span className="max-w-[90%] self-start rounded-[14px_14px_14px_4px] border border-[#E3E5E8] px-3.5 py-2.5 text-[15px]">
-          <span className="mb-1 block text-xs font-bold text-brand">Sponsored · Your brand</span>
-          A short, helpful line about your product, right where the decision happens.
-        </span>
-      </div>
-    );
-  }
-  if (s.slug === "nfc-cards") {
-    return (
-      <div aria-hidden className="flex h-[190px] -rotate-3 flex-col justify-between rounded-[18px] bg-ink p-[22px] shadow-[0_18px_36px_rgba(20,30,38,0.18)]">
-        <div className="flex items-start justify-between">
-          <Image src="/brand/mark-white.png" alt="" width={40} height={27} className="h-auto w-10" />
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#8FB3F5" strokeWidth="2" strokeLinecap="round"><path d="M8.5 8.5a5 5 0 0 1 0 7M12 6a8.5 8.5 0 0 1 0 12M15.5 3.5a12 12 0 0 1 0 17" /></svg>
-        </div>
-        <div className="flex flex-col text-white"><span className="text-xl font-bold">Your Brand</span><span className="text-sm text-on-dark">Tap to chat on WhatsApp</span></div>
-      </div>
-    );
-  }
   if (s.slug === "ai-automation") {
     return (
       <div className="flex flex-col gap-2.5 rounded-[22px] bg-white p-[18px] shadow-[0_10px_30px_rgba(20,30,38,0.08)]">
@@ -167,8 +145,6 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         <div className="hidden md:contents">
           {s.icon ? (
             <ToolTile className="absolute right-[6%] top-[10%]"><Image src={s.icon} alt="" width={36} height={36} /></ToolTile>
-          ) : s.slug === "chatgpt-ads" ? (
-            <ToolTile className="absolute right-[6%] top-[10%]"><ChatIcon /><span className="text-[15px] font-semibold">ChatGPT</span></ToolTile>
           ) : null}
           <CursorTag {...s.cursors[0]} className="absolute bottom-[7%] right-[34%]" />
           <CursorTag {...s.cursors[1]} className="absolute bottom-[10%] right-[3%]" />

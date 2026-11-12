@@ -13,6 +13,7 @@ function Stars({ n }: { n: number }) {
 }
 
 export default function Reviews() {
+  if (reviews.length < 3) return null;
   return (
     <section className="grid-canvas border-y border-[#EDEDED] py-20 md:py-32">
       <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-10">
@@ -23,13 +24,13 @@ export default function Reviews() {
               Founders don&apos;t just say thanks. They stay.
             </Reveal>
           </div>
-          <Reveal delay={160} className="flex items-center gap-4 rounded-2xl border border-line bg-white px-5 py-4">
+          {reviewSummary && <Reveal delay={160} className="flex items-center gap-4 rounded-2xl border border-line bg-white px-5 py-4">
             <span className="text-[40px] font-extrabold leading-none tracking-[-0.04em]">{reviewSummary.rating}</span>
             <span className="flex flex-col gap-1">
               <Stars n={5} />
               <span className="text-sm text-subtle">from {reviewSummary.count} reviews on {reviewSummary.source}</span>
             </span>
-          </Reveal>
+          </Reveal>}
         </div>
 
         <div className="mt-12 columns-1 gap-5 md:columns-2 lg:columns-3">

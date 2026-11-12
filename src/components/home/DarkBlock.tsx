@@ -1,7 +1,17 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { Bot, ChartNoAxesCombined, Globe, Megaphone, MousePointerClick, Users } from "lucide-react";
 import DarkModeTrigger from "../motion/DarkModeTrigger";
+
+const PILLARS = [
+  { Icon: ChartNoAxesCombined, label: "Revenue Strategy" },
+  { Icon: Users, label: "Customer Acquisition" },
+  { Icon: Globe, label: "Digital Presence" },
+  { Icon: MousePointerClick, label: "Conversion Optimisation" },
+  { Icon: Megaphone, label: "Performance Marketing" },
+  { Icon: Bot, label: "AI & Automation" },
+];
 import Reveal from "../motion/Reveal";
 import { buttonClass } from "../ui";
 import { site } from "@/lib/site";
@@ -74,18 +84,23 @@ export default function DarkBlock() {
                   <span aria-hidden className={`${handle} -bottom-1 -left-1`} />
                   <span aria-hidden className={`${handle} -bottom-1 left-1/2 -translate-x-1/2`} />
                   <span aria-hidden className={`${handle} -bottom-1 -right-1`} />
-                  <h2 className="text-[clamp(36px,4.4vw,64px)] lg:whitespace-nowrap font-bold leading-none tracking-[-0.045em]">From idea to MVP</h2>
+                  <h2 className="max-w-[520px] text-[clamp(34px,4vw,58px)] font-bold leading-none tracking-[-0.045em]">Your next customer is out there.</h2>
                 </div>
               </div>
               <DarkModeTrigger className="flex flex-col gap-5">
-                <Reveal as="p" className="max-w-[540px] text-[clamp(22px,2.2vw,30px)] font-medium leading-[1.25] tracking-[-0.02em]">
-                  We turn founders&apos; ideas into launched products: flows, design, build and the marketing that brings first customers.
+                <Reveal as="p" className="max-w-[540px] text-[clamp(20px,2vw,26px)] font-medium leading-[1.3] tracking-[-0.02em]">
+                  We help you reach them, earn their trust and turn their interest into business through thoughtful strategy and effective digital marketing.
                 </Reveal>
-                <Reveal as="p" delay={120} className="max-w-[520px] text-lg text-[#9da3ab]">
-                  Turning an idea into something real is hard. That&apos;s why we work as your partner on every step, and you approve each one before it ships.
-                </Reveal>
+                <ul className="grid max-w-[560px] grid-cols-1 gap-2.5 sm:grid-cols-2">
+                  {PILLARS.map(({ Icon, label }, i) => (
+                    <Reveal as="li" key={label} delay={80 + i * 70} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[16px] font-medium">
+                      <span aria-hidden className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-brand/20 text-brand-light"><Icon className="h-[18px] w-[18px]" strokeWidth={1.9} /></span>
+                      {label}
+                    </Reveal>
+                  ))}
+                </ul>
               </DarkModeTrigger>
-              <Reveal delay={200}><a href={site.introCallUrl} target="_blank" rel="noreferrer" className={buttonClass("primary", "px-10")}>Schedule a call</a></Reveal>
+              <Reveal delay={200}><a href={site.introCallUrl} target="_blank" rel="noreferrer" className={buttonClass("primary", "px-10")}>Book a free call</a></Reveal>
             </div>
 
             {/* laptop with animated halftone screen, bleeding off the card edge */}
@@ -104,7 +119,7 @@ export default function DarkBlock() {
           </div>
         </div>
         <p className="dark-fade mt-6 max-w-[460px] text-[15px] text-[#8A8F96]">
-          We work with founders and growing brands across India, the United Kingdom and Australia.
+          We work with businesses across India, the United Kingdom, Australia and beyond.
         </p>
       </div>
     </section>
