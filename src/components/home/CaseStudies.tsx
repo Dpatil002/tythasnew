@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { caseStudies, type CaseStudy } from "@/lib/home";
 import Reveal from "../motion/Reveal";
@@ -67,36 +67,52 @@ function Device({ cs }: { cs: CaseStudy }) {
 }
 
 function CaseCard({ cs }: { cs: CaseStudy }) {
+  const external = Boolean(cs.url);
   return (
     <article className="w-[min(88vw,880px)] shrink-0 snap-start">
-      <Link href={cs.href} className="group block rounded-[34px] bg-[#1b1c20] p-3 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)] sm:p-4">
+      <Link
+        href={cs.url ?? "/contact"}
+        {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+        className="group block rounded-[34px] bg-[#1b1c20] p-3 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)] sm:p-4"
+      >
         <div className="relative overflow-hidden rounded-[22px] bg-[#0c0d10] text-white">
           <Waves color={cs.accent} id={`waves-${cs.client.replace(/\W/g, "")}`} />
           <div className="relative flex items-center justify-between border-b border-white/10 px-6 py-3 text-[11px] text-white/50">
             <span className="flex items-center gap-2"><Image src="/brand/mark-white.png" alt="" width={20} height={14} className="h-auto w-5" /> CASE STUDY</span>
-            <span className="hidden gap-5 sm:flex"><span>Overview</span><span>Process</span><span>Results</span></span>
+            <span className="hidden sm:block">{cs.sector}</span>
           </div>
-          <div className="relative grid gap-8 px-6 pb-8 pt-8 sm:px-10 md:grid-cols-[1.2fr_1fr] md:items-center">
+          <div className="relative grid gap-8 px-6 pb-8 pt-8 sm:px-10 md:grid-cols-[1.25fr_1fr] md:items-center">
             <div className="flex flex-col gap-4">
-              <span className="self-start rounded-md bg-white/10 px-2.5 py-1 text-[13px] font-semibold">{cs.client}</span>
-              <h3 className="text-[clamp(26px,3.4vw,42px)] font-bold leading-[1.08] tracking-[-0.035em]">{cs.headline}</h3>
-              <p className="text-[13px] text-white/50">{cs.sector}</p>
+              <span className="text-[13px] font-bold uppercase tracking-[0.12em]" style={{ color: cs.accent === "#2E62D9" ? "#8FB3F5" : cs.accent }}>{cs.client}</span>
+              <h3 className="text-[clamp(26px,3.2vw,40px)] font-bold leading-[1.08] tracking-[-0.035em]">{cs.headline}</h3>
+              <p className="max-w-[440px] text-[15px] leading-relaxed text-white/65">{cs.summary}</p>
+              <ul className="flex flex-wrap gap-2">
+                {cs.tags.map((t) => <li key={t} className="rounded-full border border-white/15 px-3 py-1 text-[12px] font-medium text-white/75">{t}</li>)}
+              </ul>
               <span className="mt-1 inline-flex items-center gap-1.5 self-start rounded-full border border-white/20 px-4 py-2 text-sm font-semibold transition-colors group-hover:border-white group-hover:bg-white group-hover:text-ink">
-                Read case study <ArrowUpRight className="h-4 w-4" />
+                {external ? "View website" : "Discuss a similar project"} <ArrowUpRight aria-hidden className="h-4 w-4" />
               </span>
             </div>
             <div className="flex justify-center transition-transform duration-500 group-hover:-translate-y-2">
               <Device cs={cs} />
             </div>
           </div>
-          <dl className="relative grid grid-cols-3 border-t border-white/10">
-            {cs.stats.map((s) => (
-              <div key={s.label} className="flex flex-col gap-1 px-4 py-6 text-center sm:px-6">
-                <dt className="order-2 text-[12px] text-white/50 sm:text-[13px]">{s.label}</dt>
-                <dd className="order-1 text-[clamp(22px,2.8vw,34px)] font-bold tracking-[-0.03em]">{s.value}</dd>
-              </div>
-            ))}
-          </dl>
+          {cs.stats.length > 0 ? (
+            <dl className="relative grid border-t border-white/10" style={{ gridTemplateColumns: `repeat(${cs.stats.length}, minmax(0, 1fr))` }}>
+              {cs.stats.map((s) => (
+                <div key={s.label} className="flex flex-col gap-1 px-4 py-6 text-center sm:px-6">
+                  <dt className="order-2 text-[12px] text-white/50 sm:text-[13px]">{s.label}</dt>
+                  <dd className="order-1 text-[clamp(22px,2.8vw,34px)] font-bold tracking-[-0.03em]" style={{ color: cs.accent === "#2E62D9" ? "#FFFFFF" : undefined }}>{s.value}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : (
+            <ul className="relative flex flex-wrap justify-center gap-3 border-t border-white/10 px-4 py-6">
+              {cs.badges?.map((b) => (
+                <li key={b} className="rounded-full px-4 py-2 text-[14px] font-semibold" style={{ background: `${cs.accent}26`, color: "#fff", boxShadow: `inset 0 0 0 1px ${cs.accent}80` }}>{b}</li>
+              ))}
+            </ul>
+          )}
         </div>
       </Link>
     </article>
@@ -105,6 +121,20 @@ function CaseCard({ cs }: { cs: CaseStudy }) {
 
 export default function CaseStudies() {
   const track = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const el = track.current;
+    if (!el) return;
+    const onScroll = () => {
+      const card = el.querySelector("article");
+      const w = (card?.clientWidth ?? 800) + 24;
+      setCurrent(Math.min(caseStudies.length - 1, Math.round(el.scrollLeft / w)));
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, []);
+
   const step = (dir: number) => {
     const el = track.current;
     if (!el) return;
@@ -118,7 +148,7 @@ export default function CaseStudies() {
         <div className="flex max-w-[680px] flex-col gap-4">
           <Reveal as="p" className="text-sm font-semibold uppercase tracking-[0.12em] text-brand-light">Case studies</Reveal>
           <Reveal as="h2" delay={80} className="text-[clamp(36px,4.6vw,64px)] font-bold leading-[1.03] tracking-tighter">Results that matter.</Reveal>
-          <Reveal as="p" delay={160} className="text-[19px] text-white/70">Real projects, real numbers. Here&apos;s what changed for the brands we work with.</Reveal>
+          <Reveal as="p" delay={160} className="text-[19px] text-white/70">Healthcare, real estate, AI, SaaS and e-commerce. See how strategy-led design turned each project into measurable results.</Reveal>
         </div>
         <div className="flex gap-2">
           <button type="button" onClick={() => step(-1)} aria-label="Previous case study" className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 transition-colors hover:bg-white hover:text-ink"><ArrowLeft className="h-5 w-5" /></button>
@@ -128,11 +158,14 @@ export default function CaseStudies() {
       <Reveal variant="left" className="mt-12">
         <div
           ref={track}
-          className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-4 pb-4 [scrollbar-width:none] sm:px-6 lg:px-[max(40px,calc((100vw-1160px)/2))] [&::-webkit-scrollbar]:hidden"
+          className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth scroll-pl-4 px-4 pb-4 [scrollbar-width:none] sm:scroll-pl-6 sm:px-6 lg:scroll-pl-[max(40px,calc((100vw-1160px)/2))] lg:px-[max(40px,calc((100vw-1160px)/2))] [&::-webkit-scrollbar]:hidden"
         >
           {caseStudies.map((cs) => <CaseCard key={cs.client} cs={cs} />)}
         </div>
       </Reveal>
+      <p className="mt-8 text-center text-[15px] tabular-nums text-white/60" aria-live="polite">
+        <span className="font-bold text-white">{String(current + 1).padStart(2, "0")}</span> / {String(caseStudies.length).padStart(2, "0")}
+      </p>
     </section>
   );
 }
