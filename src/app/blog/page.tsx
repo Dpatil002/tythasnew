@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { formatDate, posts } from "@/lib/posts";
+import { formatDate, getPosts } from "@/lib/posts";
 import BlogCard, { PostCover } from "@/components/BlogCard";
 import Reveal from "@/components/motion/Reveal";
 import { SelectionBox } from "@/components/ui";
@@ -12,7 +12,8 @@ export const metadata: Metadata = {
   description: "Practical guides on websites, AI search, ads and building MVPs, from the Tythas team in Pune.",
 };
 
-export default function BlogIndex() {
+export default async function BlogIndex() {
+  const posts = await getPosts();
   const [featured, ...rest] = posts;
   return (
     <>
@@ -29,7 +30,7 @@ export default function BlogIndex() {
 
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-10">
-          <Reveal>
+          {featured && <Reveal>
             <Link href={`/blog/${featured.slug}`} className="group grid overflow-hidden rounded-[28px] border border-line bg-white transition-shadow hover:shadow-[0_30px_60px_-30px_rgba(20,30,38,0.3)] md:grid-cols-2">
               <PostCover post={featured} className="min-h-[260px] md:min-h-[380px]" />
               <div className="flex flex-col justify-center gap-4 p-8 md:p-12">
@@ -40,7 +41,7 @@ export default function BlogIndex() {
                 <span className="inline-flex items-center gap-1 font-semibold">Read article <ArrowUpRight aria-hidden className="h-4 w-4" /></span>
               </div>
             </Link>
-          </Reveal>
+          </Reveal>}
           <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {rest.map((p, i) => (
               <Reveal key={p.slug} delay={i * 150}><BlogCard post={p} /></Reveal>

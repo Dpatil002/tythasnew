@@ -42,3 +42,12 @@ Service slugs: `websites-and-apps`, `ui-ux-design`, `seo`, `google-ads`, `chatgp
 ## Deploy
 
 Push to GitHub and import the repo on [Vercel](https://vercel.com/new). Add `CONTACT_WEBHOOK_URL` under Project → Settings → Environment Variables, then point `tythas.com` at the project.
+
+## Blog (Keystatic)
+
+Editors write posts at `/keystatic`. Posts live in `content/posts/*.mdoc`, images in `public/images/blog`.
+
+- Locally: `npm run dev`, open http://localhost:3000/keystatic. Saves go straight to the files.
+- Live site: set these in Vercel → Settings → Environment Variables, then redeploy:
+  `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET`, `NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG`.
+  Editors sign in with GitHub (they need write access to this repo). Every save is a commit, and Vercel redeploys in about a minute.

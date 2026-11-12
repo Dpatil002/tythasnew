@@ -1,11 +1,22 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Code, Rocket, Sparkles, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Bot, Code, Megaphone, PenTool, Rocket, Search, Sparkles, TrendingUp, type LucideIcon } from "lucide-react";
 import { formatDate, type Post } from "@/lib/posts";
 
-const coverIcons: Record<string, LucideIcon> = { sparkles: Sparkles, code: Code, rocket: Rocket };
+const coverIcons: Record<string, LucideIcon> = {
+  sparkles: Sparkles, code: Code, rocket: Rocket, search: Search, megaphone: Megaphone, pen: PenTool, bot: Bot, trending: TrendingUp,
+};
 
 export function PostCover({ post, className = "" }: { post: Post; className?: string }) {
   const Icon = coverIcons[post.cover.icon] ?? Sparkles;
+  if (post.image) {
+    return (
+      <div className={`relative overflow-hidden bg-paper ${className}`}>
+        <Image src={post.image.src} alt={post.image.alt} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+        <span className="absolute left-6 top-6 rounded-full bg-black/45 px-3 py-1 text-xs font-semibold text-white backdrop-blur">{post.category}</span>
+      </div>
+    );
+  }
   return (
     <div
       aria-hidden

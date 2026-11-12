@@ -1,10 +1,12 @@
 import Link from "next/link";
-import { posts } from "@/lib/posts";
+import { getPosts } from "@/lib/posts";
 import BlogCard from "../BlogCard";
 import Reveal from "../motion/Reveal";
 import { buttonClass } from "../ui";
 
-export default function BlogTeaser() {
+export default async function BlogTeaser() {
+  const posts = await getPosts();
+  if (posts.length === 0) return null;
   return (
     <section className="py-20 md:py-32">
       <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-10">
