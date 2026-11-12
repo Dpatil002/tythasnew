@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight, Bot, ChartColumn, ClipboardList, CodeXml, Megaphone, PencilRuler, Rocket, Search, Target, TrendingUp } from "lucide-react";
 import { services } from "@/lib/services";
 import { homeFaqs } from "@/lib/home";
+import { site } from "@/lib/site";
 import { ApproveTag, ButtonLink } from "@/components/ui";
 import { IconBadge } from "@/components/icons";
 import HeroCanvas from "@/components/HeroCanvas";
@@ -89,7 +90,7 @@ export default function Home() {
               <Reveal as="p" className="text-sm font-semibold uppercase tracking-[0.12em] text-brand">How we work</Reveal>
               <Reveal as="h2" delay={80} className="text-[clamp(36px,4.6vw,64px)] font-bold leading-[1.03] tracking-tighter">From idea to revenue. You approve, we execute.</Reveal>
             </div>
-            <Reveal delay={160}><ButtonLink href="/contact">Book a free call</ButtonLink></Reveal>
+            <Reveal delay={160}><ButtonLink href={site.introCallUrl} target="_blank" rel="noreferrer">Book a free call</ButtonLink></Reveal>
           </div>
           <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {process.map(({ Icon, title, text, approve }, i) => (

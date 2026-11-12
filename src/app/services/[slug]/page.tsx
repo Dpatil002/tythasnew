@@ -16,6 +16,7 @@ import {
   buttonClass,
 } from "@/components/ui";
 import { PartnerBand } from "@/components/Sections";
+import { site } from "@/lib/site";
 import ProjectCollage from "@/components/ProjectCollage";
 import Faq from "@/components/Faq";
 import Reveal from "@/components/motion/Reveal";
@@ -151,7 +152,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
             <p className="max-w-[560px] text-[19px] text-body">{s.intro}</p>
             <div className="flex flex-wrap gap-3">
               <ButtonLink href="#plans">See plans</ButtonLink>
-              <ButtonLink href={`/contact?service=${s.slug}`} variant="secondary">Book a free call</ButtonLink>
+              <ButtonLink href={site.introCallUrl} target="_blank" rel="noreferrer" variant="secondary">Book a free call</ButtonLink>
             </div>
           </div>
           <div className="flex min-w-0 flex-[0_1_380px] flex-col gap-3.5">

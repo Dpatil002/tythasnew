@@ -27,6 +27,12 @@ export default function ContactPage() {
           </div>
 
           <div className="order-3 flex flex-col gap-3 lg:mt-2">
+            <a href={site.introCallUrl} target="_blank" rel="noreferrer" className="flex items-center gap-3.5 rounded-[18px] bg-ink px-[18px] py-4 text-white transition-colors hover:bg-[#1f2c37]">
+              <span aria-hidden className="flex h-[42px] w-[42px] flex-none items-center justify-center rounded-xl bg-white/10">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8FB3F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="17" rx="2" /><path d="M16 2v4M8 2v4M3 10h18M9 15l2 2 4-4" /></svg>
+              </span>
+              <span className="flex flex-col"><span className="text-[13px] text-[#A9B0B8]">Prefer to talk?</span><span className="font-semibold">Book a free 15-min intro call</span></span>
+            </a>
             <a href={`mailto:${site.email}`} className={`${card} hover:border-brand`}>
               <span aria-hidden className={iconBox}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1457CB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></svg>

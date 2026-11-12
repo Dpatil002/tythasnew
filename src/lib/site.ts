@@ -8,8 +8,10 @@ export const site = {
   whatsappNumber: "910000000000",
   whatsappDisplay: "[+91 XXXXX XXXXX]",
   replyTime: "24 hours",
-  // TODO: replace with your real booking link (Calendly, Cal.com, Google Calendar appointment page)
-  calendarUrl: "https://cal.com/[your-link]",
+  // 30-min strategy call: offered to Hot leads after the contact form
+  calendarUrl: "https://cal.com/digambar-patil-mlckev/30min",
+  // 15-min intro call: used on every "Book a free call" / "Schedule a call" button
+  introCallUrl: "https://cal.com/digambar-patil-mlckev/15min",
   instagram: "https://www.instagram.com/tythas_digital",
   linkedin: "#",
   foundedYear: 2021,

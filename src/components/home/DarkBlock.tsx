@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef } from "react";
 import DarkModeTrigger from "../motion/DarkModeTrigger";
 import Reveal from "../motion/Reveal";
 import { buttonClass } from "../ui";
+import { site } from "@/lib/site";
 
 /**
  * Dark section (onlines.com.ar "From zero to one"): the whole page turns dark
@@ -85,7 +85,7 @@ export default function DarkBlock() {
                   Turning an idea into something real is hard. That&apos;s why we work as your partner on every step, and you approve each one before it ships.
                 </Reveal>
               </DarkModeTrigger>
-              <Reveal delay={200}><Link href="/contact" className={buttonClass("primary", "px-10")}>Schedule a call</Link></Reveal>
+              <Reveal delay={200}><a href={site.introCallUrl} target="_blank" rel="noreferrer" className={buttonClass("primary", "px-10")}>Schedule a call</a></Reveal>
             </div>
 
             {/* laptop with animated halftone screen, bleeding off the card edge */}
