@@ -1,7 +1,7 @@
 export const site = {
   name: "Tythas Digital",
   tagline: "Results that matter.",
-  url: "https://www.tythas.com",
+  url: "https://tythas.com",
   email: "connect@tythas.com",
   /** Google Tag Manager containers: main container */
   gtmIds: ["GTM-NCHBQZG2"],
