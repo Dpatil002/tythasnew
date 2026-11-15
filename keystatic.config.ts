@@ -26,6 +26,32 @@ export default config({
     brand: { name: "Tythas Blog" },
   },
   collections: {
+    authors: collection({
+      label: "Authors",
+      slugField: "name",
+      path: "content/authors/*",
+      format: { data: "yaml" },
+      columns: ["name", "role"],
+      schema: {
+        name: fields.slug({
+          name: { label: "Name", validation: { isRequired: true } },
+          slug: { label: "URL slug", description: "Becomes tythas.com/author/<slug>" },
+        }),
+        role: fields.text({ label: "Role", description: "e.g. Founder, Tythas Digital" }),
+        photo: fields.image({
+          label: "Photo",
+          description: "Square photo, at least 400×400.",
+          directory: "public/images/authors",
+          publicPath: "/images/authors/",
+        }),
+        shortBio: fields.text({ label: "Short bio", description: "One or two lines shown under articles.", multiline: true, validation: { length: { max: 240 } } }),
+        bio: fields.text({ label: "Full bio", description: "Shown on the author page. Separate paragraphs with a blank line.", multiline: true }),
+        expertise: fields.array(fields.text({ label: "Topic" }), { label: "Expertise", itemLabel: (p) => p.value }),
+        linkedin: fields.url({ label: "LinkedIn URL" }),
+        x: fields.url({ label: "X (Twitter) URL" }),
+        website: fields.url({ label: "Website" }),
+      },
+    }),
     posts: collection({
       label: "Blog posts",
       slugField: "title",
@@ -54,7 +80,7 @@ export default config({
           publicPath: "/images/blog/",
         }),
         coverAlt: fields.text({ label: "Cover image description (alt text)" }),
-        author: fields.text({ label: "Author", defaultValue: "Tythas team" }),
+        author: fields.relationship({ label: "Author", collection: "authors", validation: { isRequired: true } }),
         seoTitle: fields.text({ label: "SEO title (optional)", description: "Overrides the title in Google. Max ~60 characters." }),
         draft: fields.checkbox({ label: "Draft", description: "Drafts are saved but not shown on the site.", defaultValue: false }),
         content: fields.markdoc({

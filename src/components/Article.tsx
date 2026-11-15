@@ -1,13 +1,42 @@
-import Markdoc, { type Node } from "@markdoc/markdoc";
+import Markdoc, { Tag, type Node, type RenderableTreeNode } from "@markdoc/markdoc";
 import React from "react";
 
-/** Renders a Keystatic Markdoc article with the site's typography. */
-export default function Article({ node }: { node: Node }) {
+export type TocItem = { id: string; text: string; level: 2 | 3 };
+
+const slugify = (t: string) =>
+  t.toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 80) || "section";
+
+const textOf = (n: RenderableTreeNode): string =>
+  typeof n === "string" ? n : Tag.isTag(n) ? n.children.map(textOf).join("") : "";
+
+/** Transforms the article and gives every H2/H3 a stable id, returning the table of contents. */
+export function prepareArticle(node: Node) {
   const content = Markdoc.transform(node);
+  const toc: TocItem[] = [];
+  const used = new Map<string, number>();
+  const walk = (n: RenderableTreeNode) => {
+    if (!Tag.isTag(n)) return;
+    if (n.name === "h2" || n.name === "h3") {
+      const text = textOf(n).trim();
+      const base = slugify(text);
+      const count = used.get(base) ?? 0;
+      used.set(base, count + 1);
+      const id = count ? `${base}-${count + 1}` : base;
+      n.attributes = { ...n.attributes, id };
+      toc.push({ id, text, level: n.name === "h2" ? 2 : 3 });
+    }
+    n.children.forEach(walk);
+  };
+  walk(content);
+  return { content, toc };
+}
+
+/** Renders a prepared Keystatic Markdoc article with the site's typography. */
+export default function Article({ content }: { content: RenderableTreeNode }) {
   return (
     <div
       className={[
-        "flex flex-col gap-5 text-[19px] leading-[1.7] text-[#2B3036]",
+        "flex flex-col gap-5 text-[19px] [&_h2]:scroll-mt-28 [&_h3]:scroll-mt-28 leading-[1.7] text-[#2B3036]",
         "[&_h2]:mt-6 [&_h2]:text-[clamp(26px,2.6vw,34px)] [&_h2]:font-bold [&_h2]:leading-tight [&_h2]:tracking-[-0.03em] [&_h2]:text-ink",
         "[&_h3]:mt-4 [&_h3]:text-[22px] [&_h3]:font-bold [&_h3]:tracking-[-0.02em] [&_h3]:text-ink",
         "[&_ul]:flex [&_ul]:list-none [&_ul]:flex-col [&_ul]:gap-3 [&_ul]:pl-0",

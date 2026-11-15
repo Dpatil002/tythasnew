@@ -19,6 +19,43 @@ const COVERS: Record<string, { from: string; to: string; icon: string }> = {
   Growth: { from: "#0B1F4D", to: "#3B8DF5", icon: "trending" },
 };
 
+export type AuthorRef = { slug: string; name: string; role: string; photo?: string };
+
+export type Author = AuthorRef & {
+  shortBio: string;
+  bio: string[];
+  expertise: string[];
+  links: { label: string; href: string }[];
+};
+
+const FALLBACK_AUTHOR: AuthorRef = { slug: "", name: "Tythas team", role: "Tythas Digital" };
+
+/** All authors, keyed by slug */
+export const getAuthors = cache(async (): Promise<Map<string, Author>> => {
+  const all = await reader.collections.authors.all();
+  return new Map(
+    all.map(({ slug, entry: a }) => [
+      slug,
+      {
+        slug,
+        name: a.name,
+        role: a.role,
+        photo: a.photo || undefined,
+        shortBio: a.shortBio,
+        bio: a.bio.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean),
+        expertise: a.expertise.filter(Boolean),
+        links: [
+          a.linkedin && { label: "LinkedIn", href: a.linkedin },
+          a.x && { label: "X", href: a.x },
+          a.website && { label: "Website", href: a.website },
+        ].filter(Boolean) as { label: string; href: string }[],
+      },
+    ]),
+  );
+});
+
+export const getAuthor = async (slug: string) => (await getAuthors()).get(slug) ?? null;
+
 export type Post = {
   slug: string;
   title: string;
@@ -26,7 +63,7 @@ export type Post = {
   category: string;
   date: string; // ISO
   readMins: number;
-  author: string;
+  author: AuthorRef;
   seoTitle?: string;
   image?: { src: string; alt: string };
   cover: { from: string; to: string; icon: string };
@@ -34,7 +71,8 @@ export type Post = {
 
 type Entry = NonNullable<Awaited<ReturnType<typeof reader.collections.posts.read>>>;
 
-function toPost(slug: string, e: Entry): Post {
+function toPost(slug: string, e: Entry, authors: Map<string, Author>): Post {
+  const a = e.author ? authors.get(e.author) : undefined;
   return {
     slug,
     title: e.title,
@@ -42,7 +80,7 @@ function toPost(slug: string, e: Entry): Post {
     category: e.category,
     date: e.date ?? "",
     readMins: e.readMins ?? 5,
-    author: e.author || "Tythas team",
+    author: a ? { slug: a.slug, name: a.name, role: a.role, photo: a.photo } : FALLBACK_AUTHOR,
     seoTitle: e.seoTitle || undefined,
     image: e.cover ? { src: e.cover, alt: e.coverAlt || "" } : undefined,
     cover: COVERS[e.category] ?? COVERS.Growth,
@@ -51,10 +89,10 @@ function toPost(slug: string, e: Entry): Post {
 
 /** Published posts, newest first */
 export const getPosts = cache(async (): Promise<Post[]> => {
-  const all = await reader.collections.posts.all();
+  const [all, authors] = await Promise.all([reader.collections.posts.all(), getAuthors()]);
   return all
     .filter((p) => !p.entry.draft)
-    .map((p) => toPost(p.slug, p.entry))
+    .map((p) => toPost(p.slug, p.entry, authors))
     .sort((a, b) => b.date.localeCompare(a.date));
 });
 
@@ -62,8 +100,8 @@ export const getPosts = cache(async (): Promise<Post[]> => {
 export const getPost = cache(async (slug: string) => {
   const entry = await reader.collections.posts.read(slug);
   if (!entry || entry.draft) return null;
-  const { node } = await entry.content();
-  return { post: toPost(slug, entry), node };
+  const [{ node }, authors] = await Promise.all([entry.content(), getAuthors()]);
+  return { post: toPost(slug, entry, authors), node };
 });
 
 export const formatDate = (iso: string) =>
