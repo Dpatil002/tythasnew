@@ -9,9 +9,9 @@ export const site = {
   whatsappDisplay: "[+91 XXXXX XXXXX]",
   replyTime: "24 hours",
   // 30-min strategy call: offered to Hot leads after the contact form
-  calendarUrl: "https://cal.com/digambar-patil-mlckev/30min",
+  calendarUrl: "https://cal.com/connectwithtythas/30min",
   // 15-min intro call: used on every "Book a free call" / "Schedule a call" button
-  introCallUrl: "https://cal.com/digambar-patil-mlckev/15min",
+  introCallUrl: "https://cal.com/connectwithtythas/15min",
   instagram: "https://www.instagram.com/tythas_digital",
   linkedin: "#",
   foundedYear: 2021,
