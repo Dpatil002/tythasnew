@@ -70,15 +70,29 @@ export default function ContactForm() {
     setTouched(true);
     if (!canSend || status === "sending") return;
     setStatus("sending");
+    const { tier, score } = scoreLead({ goal, stage, budget, timeline, role, services: picked });
+    // Two independent deliveries: the API (Google Sheet + email) and Netlify Forms as a backup.
+    // The enquiry counts as sent if either one gets it.
+    const api = fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ services: picked, goal, stage, budget, timeline, role, name, email, phone, company, idea, website }),
+    }).then(async (r) => {
+      if (!r.ok) console.warn("[contact] API delivery failed", r.status, await r.text().catch(() => ""));
+      return r.ok;
+    }).catch(() => false);
+    const netlify = fetch("/__forms.html", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        "form-name": "contact", website, name, email, phone, company, role, services: picked.join(", "),
+        goal, stage, budget, timeline, tier, score: String(score), idea,
+      }).toString(),
+    }).then((r) => r.ok).catch(() => false);
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ services: picked, goal, stage, budget, timeline, role, name, email, phone, company, idea, website }),
-      });
-      if (!res.ok) throw new Error("bad status");
+      const [apiOk, netlifyOk] = await Promise.all([api, netlify]);
+      if (!apiOk && !netlifyOk) throw new Error("not delivered");
       // Conversion event for Google Tag Manager (no personal details sent)
-      const { tier, score } = scoreLead({ goal, stage, budget, timeline, role, services: picked });
       const w = window as unknown as { dataLayer?: unknown[] };
       (w.dataLayer = w.dataLayer || []).push({ event: "generate_lead", lead_tier: tier, lead_score: score, services: picked.join(", ") });
       setStatus("idle");

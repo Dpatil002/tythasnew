@@ -49,15 +49,18 @@ export async function POST(req: Request) {
   const webhook = process.env.CONTACT_WEBHOOK_URL;
   if (webhook) {
     try {
-      const res = await fetch(webhook, {
+      const res = await fetch(webhook.trim(), {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" }, // Apps Script reads e.postData.contents
         body: JSON.stringify(lead),
+        redirect: "follow",
       });
-      if (!res.ok) throw new Error(`Webhook responded ${res.status}`);
+      const text = await res.text();
+      if (!res.ok) throw new Error(`Webhook responded ${res.status}: ${text.slice(0, 200)}`);
     } catch (err) {
-      console.error("[contact] webhook delivery failed", err);
-      return NextResponse.json({ ok: false, error: "Delivery failed" }, { status: 502 });
+      const detail = err instanceof Error ? err.message : String(err);
+      console.error("[contact] webhook delivery failed", detail);
+      return NextResponse.json({ ok: false, error: "Delivery failed", detail: detail.slice(0, 300) }, { status: 502 });
     }
   } else {
     console.info("[contact] new lead (set CONTACT_WEBHOOK_URL to deliver it):", lead);
