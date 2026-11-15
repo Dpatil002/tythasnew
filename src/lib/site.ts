@@ -2,7 +2,7 @@ export const site = {
   name: "Tythas Digital",
   tagline: "Results that matter.",
   url: "https://www.tythas.com",
-  email: "contact@tythas.com",
+  email: "connect@tythas.com",
   location: "Pune, Maharashtra, India",
   // TODO: replace with the real WhatsApp Business number (digits only, with country code)
   whatsappNumber: "910000000000",
