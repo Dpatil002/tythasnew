@@ -103,7 +103,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
                 )}
                 <span className="text-sm text-subtle">{author.role}</span>
                 {authorBio && <p className="mt-1 text-[16px] leading-relaxed text-body">{authorBio}</p>}
-                {authorHref && <Link href={authorHref} className="mt-1 text-sm font-semibold text-brand hover:underline">More from {author.name.split(" ")[0]} →</Link>}
+                {authorHref && <Link href={authorHref} className="mt-1 text-sm font-semibold text-brand hover:underline">More from {author.name} →</Link>}
               </div>
             </section>
           </div>
@@ -135,7 +135,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
             description: post.excerpt,
             datePublished: post.date,
             author: author.slug
-              ? { "@type": "Person", name: author.name, jobTitle: author.role, url: `${site.url}/author/${author.slug}` }
+              ? { "@type": /^tythas\b/i.test(author.name) ? "Organization" : "Person", name: author.name, url: `${site.url}/author/${author.slug}` }
               : { "@type": "Organization", name: site.name },
             publisher: { "@type": "Organization", name: site.name },
             mainEntityOfPage: `${site.url}/blog/${post.slug}`,

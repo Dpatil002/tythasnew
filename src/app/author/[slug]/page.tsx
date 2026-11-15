@@ -84,7 +84,7 @@ export default async function AuthorPage({ params }: { params: Promise<Params> }
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-10">
           <h2 className="mb-8 text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.03em]">
-            Articles by {author.name.split(" ")[0]} <span className="text-subtle">({posts.length})</span>
+            Articles by {author.name} <span className="text-subtle">({posts.length})</span>
           </h2>
           {posts.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -105,9 +105,8 @@ export default async function AuthorPage({ params }: { params: Promise<Params> }
             "@context": "https://schema.org",
             "@type": "ProfilePage",
             mainEntity: {
-              "@type": "Person",
+              "@type": /^tythas\b/i.test(author.name) ? "Organization" : "Person",
               name: author.name,
-              jobTitle: author.role,
               description: author.shortBio,
               url: `${site.url}/author/${author.slug}`,
               worksFor: { "@type": "Organization", name: site.name, url: site.url },
