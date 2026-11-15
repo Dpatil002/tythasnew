@@ -77,6 +77,10 @@ export default function ContactForm() {
         body: JSON.stringify({ services: picked, goal, stage, budget, timeline, role, name, email, phone, company, idea, website }),
       });
       if (!res.ok) throw new Error("bad status");
+      // Conversion event for Google Tag Manager (no personal details sent)
+      const { tier, score } = scoreLead({ goal, stage, budget, timeline, role, services: picked });
+      const w = window as unknown as { dataLayer?: unknown[] };
+      (w.dataLayer = w.dataLayer || []).push({ event: "generate_lead", lead_tier: tier, lead_score: score, services: picked.join(", ") });
       setStatus("idle");
       setStep(TOTAL + 1);
     } catch {
