@@ -3,8 +3,8 @@ export const site = {
   tagline: "Results that matter.",
   url: "https://www.tythas.com",
   email: "connect@tythas.com",
-  /** Google Tag Manager containers: main container, and the GA4 container */
-  gtmIds: ["GTM-NCHBQZG2", "GTM-WVCPZ4XP"],
+  /** Google Tag Manager containers: main container */
+  gtmIds: ["GTM-NCHBQZG2"],
   location: "Pune, Maharashtra, India",
   // TODO: replace with the real WhatsApp Business number (digits only, with country code)
   whatsappNumber: "910000000000",
