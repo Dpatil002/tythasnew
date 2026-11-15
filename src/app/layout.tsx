@@ -32,8 +32,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* Google tag (GTM container), once per page */}
-        <Script id="gtm" strategy="afterInteractive" src={`https://www.googletagmanager.com/gtm.js?id=${site.gtmId}`} />
+        {/* Google tags (GTM containers), each loaded once per page; they share one dataLayer */}
+        {site.gtmIds.map((id) => (
+          <Script key={id} id={`gtm-${id}`} strategy="afterInteractive" src={`https://www.googletagmanager.com/gtm.js?id=${id}`} />
+        ))}
         <Script id="gtm-init" strategy="afterInteractive">
           {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
