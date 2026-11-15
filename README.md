@@ -57,3 +57,11 @@ Editors write posts at `/keystatic`. Posts live in `content/posts/*.mdoc`, image
 `netlify.toml` is included. In Netlify: Add new site → Import from GitHub → `Dpatil002/tythasnew` → Deploy.
 Add the same environment variables as on Vercel (`CONTACT_WEBHOOK_URL`, the four `KEYSTATIC_*` ones),
 and add `https://<your-site>.netlify.app/api/keystatic/github/oauth/callback` as a callback URL on the Keystatic GitHub App.
+
+## Leads in Supabase
+
+1. Create a free project at supabase.com.
+2. SQL Editor → paste `supabase/leads.sql` → Run.
+3. Project Settings → API Keys: copy the Project URL and a **secret** key (or the legacy `service_role` key).
+4. Netlify env vars: `SUPABASE_URL`, `SUPABASE_SECRET_KEY` (mark as secret). Redeploy.
+Leads appear in Table Editor → `leads`. Use the `status` and `notes` columns to track follow-up.
