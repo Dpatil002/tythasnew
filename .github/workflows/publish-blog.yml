@@ -1,0 +1,20 @@
+# Netlify's free plan blocks deploys from commits by people who aren't Netlify team members
+# (e.g. teammates saving posts in Keystatic). This triggers a normal site deploy through a
+# Netlify build hook instead. Setup: Netlify → Site configuration → Build & deploy →
+# Build hooks → Add build hook, then save its URL as the GitHub secret NETLIFY_BUILD_HOOK.
+name: Publish blog changes
+on:
+  push:
+    branches: [main]
+    paths: ["content/**", "public/images/**"]
+jobs:
+  deploy:
+    if: github.actor != github.repository_owner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Netlify deploy
+        env:
+          HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "NETLIFY_BUILD_HOOK secret is not set"; exit 1; fi
+          curl -fsS -X POST -d '{}' "$HOOK?trigger_title=Blog+update+by+${{ github.actor }}"
