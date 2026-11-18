@@ -36,7 +36,7 @@ export default function Article({ content }: { content: RenderableTreeNode }) {
   return (
     <div
       className={[
-        "flex flex-col gap-5 text-[19px] [&_h2]:scroll-mt-28 [&_h3]:scroll-mt-28 leading-[1.7] text-[#2B3036]",
+        "flex flex-col gap-5 [&>article]:flex [&>article]:flex-col [&>article]:gap-5 [&_li>p]:m-0 text-[19px] [&_h2]:scroll-mt-28 [&_h3]:scroll-mt-28 leading-[1.7] text-[#2B3036]",
         "[&_h2]:mt-6 [&_h2]:text-[clamp(26px,2.6vw,34px)] [&_h2]:font-bold [&_h2]:leading-tight [&_h2]:tracking-[-0.03em] [&_h2]:text-ink",
         "[&_h3]:mt-4 [&_h3]:text-[22px] [&_h3]:font-bold [&_h3]:tracking-[-0.02em] [&_h3]:text-ink",
         "[&_ul]:flex [&_ul]:list-none [&_ul]:flex-col [&_ul]:gap-3 [&_ul]:pl-0",
