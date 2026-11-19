@@ -43,6 +43,7 @@ const CURSORS: CursorDef[] = [
 
 const MESSAGES = [
   "Let's grow your business online.",
+  "Decospaa: ₹28 lakh revenue from ₹10k in ads.",
   "Dewaxify: appointment enquiries up 200%.",
   "SB Patil Group: enquiries up from 40 to 250 a month.",
   "Gixel Labs: organic enquiries up 300%.",

@@ -2,6 +2,7 @@
 
 /** Brands for the logo strip. Swap `name` for a real logo by adding `logo: "/clients/<file>.svg"`. */
 export const clients: { name: string; logo?: string; style?: string }[] = [
+  { name: "Decospaa", style: "font-bold tracking-tight" },
   { name: "Dewaxify", style: "font-extrabold uppercase tracking-[0.06em] text-[20px]" },
   { name: "SB Patil Group", style: "font-serif tracking-wide" },
   { name: "Gixel Labs", style: "font-black tracking-tight" },
@@ -34,9 +35,43 @@ export type CaseStudy = {
   accent: string;
   /** Live site. Leave empty to link to the contact page. */
   url?: string;
+  /** Cover image (16:10). Replaces the drawn device mockup when set. */
+  image?: string;
+  imageAlt?: string;
+  /** Extra facts shown on the case study page, e.g. budget, duration, locations */
+  campaign?: { label: string; value: string }[];
 };
 
 export const caseStudies: CaseStudy[] = [
+  {
+    slug: "decospaa",
+    client: "Decospaa",
+    sector: "Sports Infrastructure · Maharashtra",
+    title: "Lead generation for a sports court builder",
+    headline: "₹28 lakh in revenue from a ₹10,000 ad budget",
+    summary:
+      "Decospaa designs and builds pickleball, padel, badminton and multi-sport courts. We ran a 15-day paid ad campaign across Mumbai, Pune, Thane and Nashik on a ₹10,000 budget. It reached an 18% click-through rate, brought in 14 leads and turned 4 of them into projects worth ₹28 lakh.",
+    short: "A 15-day campaign across Mumbai, Pune, Thane and Nashik turned ₹10,000 of ad spend into 14 leads, 4 projects and ₹28 lakh in revenue.",
+    tags: ["Lead Generation", "Paid Ads", "Sports Infrastructure", "B2B"],
+    stats: [
+      { value: "₹28L", label: "revenue generated" },
+      { value: "280x", label: "return on ad spend" },
+      { value: "18%", label: "click-through rate" },
+    ],
+    device: "browser",
+    accent: "#16A34A",
+    url: "https://decospaa.com",
+    image: "/images/work/decospaa-cover.webp",
+    imageAlt: "Decospaa campaign results: ₹28 lakh revenue from a ₹10,000 ad budget in 15 days, 18% CTR, 14 leads and 4 won",
+    campaign: [
+      { label: "Ad budget", value: "₹10,000" },
+      { label: "Campaign duration", value: "15 days" },
+      { label: "Locations", value: "Mumbai, Pune, Thane, Nashik" },
+      { label: "Leads generated", value: "14" },
+      { label: "Conversions", value: "4" },
+      { label: "Revenue generated", value: "₹28 lakh" },
+    ],
+  },
   {
     slug: "dewaxify",
     client: "Dewaxify",

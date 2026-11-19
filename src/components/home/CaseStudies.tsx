@@ -42,7 +42,7 @@ function Card({ cs, active }: { cs: CaseStudy; active: boolean }) {
         </div>
 
         <div className="relative grid flex-1 gap-6 px-6 pb-8 pt-6 md:grid-cols-[1.25fr_1fr] md:px-8">
-          <Waves accent={cs.accent} className="absolute inset-y-0 right-0 hidden h-full w-[70%] opacity-70 md:block" />
+          {!cs.image && <Waves accent={cs.accent} className="absolute inset-y-0 right-0 hidden h-full w-[70%] opacity-70 md:block" />}
           <div className="relative flex flex-col gap-4">
             <span className="text-[12px] font-bold uppercase tracking-[0.12em]" style={{ color: cs.accent }}>{cs.client}</span>
             <h3 className="text-[clamp(26px,3vw,38px)] font-bold leading-[1.08] tracking-[-0.03em]">
@@ -67,7 +67,18 @@ function Card({ cs, active }: { cs: CaseStudy; active: boolean }) {
             </div>
           </div>
           <div className="relative hidden items-center justify-center md:flex">
-            <MiniBrowser accent={cs.accent} />
+            {cs.image ? (
+              <Image
+                src={cs.image}
+                alt={cs.imageAlt ?? `${cs.client} case study`}
+                width={1600}
+                height={1000}
+                sizes="340px"
+                className="w-full rounded-xl border border-white/10 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)]"
+              />
+            ) : (
+              <MiniBrowser accent={cs.accent} />
+            )}
           </div>
         </div>
 

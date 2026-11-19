@@ -6,6 +6,7 @@ import { caseStudies } from "@/lib/home";
 import DarkModeTrigger from "@/components/motion/DarkModeTrigger";
 import Reveal from "@/components/motion/Reveal";
 import Waves from "@/components/work/Waves";
+import Image from "next/image";
 import Mockup from "@/components/work/Mockup";
 import WorkCard from "@/components/work/WorkCard";
 import ProjectCollage from "@/components/ProjectCollage";
@@ -58,7 +59,19 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
               </Reveal>
             </div>
             <Reveal variant="right" delay={200} className="relative">
-              <Mockup cs={cs} />
+              {cs.image ? (
+                <Image
+                  src={cs.image}
+                  alt={cs.imageAlt ?? `${cs.client} case study`}
+                  width={1600}
+                  height={1000}
+                  priority
+                  sizes="(min-width: 1024px) 560px, 100vw"
+                  className="w-full rounded-2xl border border-white/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)]"
+                />
+              ) : (
+                <Mockup cs={cs} />
+              )}
             </Reveal>
           </div>
         </section>
@@ -82,6 +95,20 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
             ))}
           </dl>
         </section>
+
+        {cs.campaign && cs.campaign.length > 0 && (
+          <section className="mx-auto max-w-[1240px] px-4 pt-16 sm:px-6 lg:px-10">
+            <h2 className="text-[clamp(26px,3vw,38px)] font-bold tracking-[-0.03em]">Campaign at a glance</h2>
+            <dl className="mt-8 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
+              {cs.campaign.map((c) => (
+                <div key={c.label} className="flex flex-col gap-1.5 bg-black p-6">
+                  <dt className="text-[14px] text-white/50">{c.label}</dt>
+                  <dd className="text-[22px] font-bold tracking-[-0.02em]">{c.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
 
         <section className="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:px-10">
           <dl className="grid gap-8 text-[15px] sm:grid-cols-2 lg:grid-cols-4">
